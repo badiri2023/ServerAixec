@@ -67,4 +67,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<GameHub>("/ws/game");
 
-app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5000"}");
+app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5001"}");
