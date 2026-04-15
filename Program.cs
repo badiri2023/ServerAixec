@@ -9,14 +9,13 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Base de datos MySQL desde variables de entorno
-var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-var dbUser = Environment.GetEnvironmentVariable("DB_USER");
-var dbPass = Environment.GetEnvironmentVariable("DB_PASSWORD");
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? $"Server={Environment.GetEnvironmentVariable("DB_HOST")};" +
+       $"Port=3306;" +
+       $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+       $"User ID={Environment.GetEnvironmentVariable("DB_USER")};" +
+       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
+       $"SslMode=Required;";
 
 
 

@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\User\\AixecAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\aixecapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\aixecapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\aixecapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\aixecapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\aixecapi\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,11 +74,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "AixecAPI.http",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\AixecAPI.http",
               "RelativeDocumentMoniker": "AixecAPI.http",
@@ -105,7 +105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -118,7 +118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "JwtService.cs",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\Services\\JwtService.cs",
               "RelativeDocumentMoniker": "Services\\JwtService.cs",
@@ -144,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
@@ -157,20 +157,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\User\\AixecAPI\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAiwEUAAABSAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAAiwEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-26T17:03:26.157Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\User\\AixecAPI\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -228,7 +228,7 @@
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
               "ToolTip": "C:\\Users\\User\\AixecAPI\\Properties\\launchSettings.json",
               "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-04-09T15:55:21.503Z",
               "EditorCaption": ""
