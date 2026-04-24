@@ -4,13 +4,11 @@ namespace AixecAPI.Hubs;
 
 public class GameHub : Hub
 {
-    // El cliente envía su posición y se la mandamos a todos
     public async Task SendPosition(string userId, float x, float y)
     {
         await Clients.Others.SendAsync("ReceivePosition", userId, x, y);
     }
 
-    // Mensaje de chat o evento de juego
     public async Task SendGameEvent(string eventType, string data)
     {
         await Clients.All.SendAsync("ReceiveGameEvent", eventType, data);

@@ -8,6 +8,18 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Después de var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Necesario para SignalR
+    });
+});
+
 // Base de datos MySQL desde variables de entorno
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? $"Server={Environment.GetEnvironmentVariable("DB_HOST")};" +
@@ -56,14 +68,23 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
+);
+
 var app = builder.Build();
+
+
 
 // Aplicar migraciones automáticamente al arrancar
 
-
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<GameHub>("/ws/game");
 
-app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5001"}");
+app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5000"}");
