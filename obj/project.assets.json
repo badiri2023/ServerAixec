@@ -8255,23 +8255,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "D:\\Apps\\Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\BillY\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\AixecAPI.csproj",
+      "projectUniqueName": "C:\\Users\\BillY\\OneDrive\\Desktop\\ProyectoDual\\ServerDual\\ServerAixec\\AixecAPI.csproj",
       "projectName": "AixecAPI",
-      "projectPath": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\AixecAPI.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\obj\\",
+      "projectPath": "C:\\Users\\BillY\\OneDrive\\Desktop\\ProyectoDual\\ServerDual\\ServerAixec\\AixecAPI.csproj",
+      "packagesPath": "C:\\Users\\BillY\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\BillY\\OneDrive\\Desktop\\ProyectoDual\\ServerDual\\ServerAixec\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Apps\\Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\BillY\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8280,6 +8280,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -8297,8 +8298,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "10.0.100"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -8358,7 +8358,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
