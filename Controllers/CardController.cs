@@ -36,8 +36,12 @@ public class CardController : ControllerBase
                 pc.Card.Attack,
                 pc.Card.Defense,
                 pc.Card.Rarity,
-                pc.Card.Ability,
+                // hemos añadido el maná y la expansion añadiendo el nombre d ela hbilidad
+                pc.Card.Mana,     
                 pc.Card.Expansion,
+                Ability = new {   
+                    Name = pc.Card.Ability != null ? pc.Card.Ability.Name : "" 
+                },
                 pc.Quantity
             })
             .ToListAsync();
