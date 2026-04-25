@@ -45,3 +45,5 @@ obj/project.nuget.cache
 .vs/ProjectEvaluation/aixecapi.metadata.v9.bin
 .vs/ProjectEvaluation/aixecapi.projects.v9.bin
 .vs/ProjectEvaluation/aixecapi.strings.v9.bin
+/bin
+/publish
