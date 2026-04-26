@@ -8,7 +8,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Después de var builder = WebApplication.CreateBuilder(args);
+// Despuï¿½s de var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -79,12 +79,13 @@ var app = builder.Build();
 
 
 
-// Aplicar migraciones automáticamente al arrancar
+// Aplicar migraciones automï¿½ticamente al arrancar
 
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<GameHub>("/ws/game");
+app.MapHub<ChatHub>("/ws/chat");
 
 app.Run($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5000"}");
