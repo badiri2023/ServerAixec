@@ -11,6 +11,7 @@
         public Ability Ability { get; set; }
         public string Expansion { get; set; }
         public int Mana { get; set; }
-        public string Type { get; set; }
+        public int Type { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

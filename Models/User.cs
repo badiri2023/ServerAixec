@@ -8,5 +8,8 @@ public class User
     public string PasswordHash { get; set; } = string.Empty;
     public bool IsInGame { get; set; } = false;
     public int Level { get; set; } = 1;
+    public int Money { get; set; } = 500;
+    public int WonMatches { get; set; }
+    public int PlayedMatches { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

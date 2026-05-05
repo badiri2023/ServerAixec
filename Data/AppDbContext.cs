@@ -12,4 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<GamePlayer> GamePlayers => Set<GamePlayer>();
     public DbSet<Card> Cards => Set<Card>();
     public DbSet<PlayerCard> PlayerCards => Set<PlayerCard>();
+    public DbSet<Deck> Decks => Set<Deck>();
+    public DbSet<DeckCard> DeckCards => Set<DeckCard>();
 }

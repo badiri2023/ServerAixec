@@ -47,3 +47,5 @@ obj/project.nuget.cache
 .vs/ProjectEvaluation/aixecapi.strings.v9.bin
 /bin
 /publish
+/.vs
+/bin

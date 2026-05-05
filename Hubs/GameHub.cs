@@ -26,12 +26,5 @@ public class GameHub : Hub
         await base.OnDisconnectedAsync(exception);
     }
 
-// para el chat global
-    public async Task SendChatMessage(object messageData)
-    {
-        // Retransmite el objeto tal cual a todos los conectados
-        await Clients.All.SendAsync("ReceiveMessage", messageData);
-    }
-
 
 }

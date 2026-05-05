@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AixecAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f069799f3f34648f5e9962b7938dff7a2fd7c7b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3f16bb4ed999438941e6955fa1453149037de4e")]
 [assembly: System.Reflection.AssemblyProductAttribute("AixecAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AixecAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
