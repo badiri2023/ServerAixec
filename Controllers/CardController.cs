@@ -107,7 +107,7 @@ public class CardController : ControllerBase
         if (userIdString == null) return Unauthorized();
         int userId = int.Parse(userIdString);
 
-        // 2. Buscar al usuario y verificar dinero
+        //Buscar al usuario y verificar dinero
         var user = await _db.Users.FindAsync(userId);
         int precioSobre = 100; // Puedes cambiar esto según la expansión
 
