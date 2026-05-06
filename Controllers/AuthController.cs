@@ -1,4 +1,5 @@
-﻿using AixecAPI.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using AixecAPI.Data;
 using AixecAPI.Models;
 using AixecAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,34 @@ public class AuthController : ControllerBase
 
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
+
+// GET: api/auth/perfil
+[HttpGet("perfil")]
+//Solo usuarios logueados pueden ver su dinero
+[Authorize]
+public async Task<IActionResult> GetPerfil()
+{
+    // Extraemos el ID del usuario desde el Token JWT
+    var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    if (userIdString == null) return Unauthorized();
+    
+    int userId = int.Parse(userIdString);
+
+    // Buscamos al usuario en la base de datos
+    var user = await _db.Users.FindAsync(userId);
+    if (user == null) return NotFound();
+
+    // Devolvemos la información necesaria (incluyendo Money)
+    return Ok(new {
+        id = user.Id,
+        username = user.Username,
+        money = user.Money,
+        level = user.Level
+    });
+}
+
+
+
 }
 
 public record RegisterDto(string Username, string Email, string Password);

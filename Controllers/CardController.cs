@@ -97,44 +97,64 @@ public class CardController : ControllerBase
         await _db.SaveChangesAsync();
         return Ok();
     }
+
     // GET api/card/open/{expansion} — Abrir sobre
     [HttpGet("open/{expansion}")]
     public async Task<IActionResult> OpenPack(string expansion)
     {
-        var cards = await _db.Cards
-            .Where(c => c.Expansion == expansion)
-            .ToListAsync();
+        //Obtener ID del usuario del Token
+        var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userIdString == null) return Unauthorized();
+        int userId = int.Parse(userIdString);
 
-        if (cards.Count == 0)
-            return NotFound("No se encontraron cartas para esta expansión");
+        // 2. Buscar al usuario y verificar dinero
+        var user = await _db.Users.FindAsync(userId);
+        int precioSobre = 100; // Puedes cambiar esto según la expansión
 
-        var commons = cards.Where(c => c.Rarity == 1).ToList();
-        var uncommons = cards.Where(c => c.Rarity == 2).ToList();
-        var legendaries = cards.Where(c => c.Rarity == 3).ToList();
+        if (user == null || user.Money < precioSobre)
+            return BadRequest("No tienes suficiente dinero o el usuario no existe.");
 
+        // 3. Obtener cartas de esa expansión
+        var cards = await _db.Cards.Where(c => c.Expansion == expansion).ToListAsync();
+        if (!cards.Any()) return NotFound("No hay cartas en esta expansión.");
+
+        // 4. Lógica de Gacha (Probabilidades)
         var random = new Random();
-        var result = new List<Card>();
-
+        var outputCards = new List<Card>();
         for (int i = 0; i < 3; i++)
         {
-            var roll = random.NextDouble() * 100;
-
-            List<Card> pool;
-            if (roll < 10 && legendaries.Count > 0)
-                pool = legendaries;
-            else if (roll < 40 && uncommons.Count > 0)
-                pool = uncommons;
-            else if (commons.Count > 0)
-                pool = commons;
-            else
-                pool = cards; // fallback si no hay cartas de esa rareza
-
-            var card = pool[random.Next(pool.Count)];
-            result.Add(card);
+            double roll = random.NextDouble() * 100;
+            Card picked;
+            if (roll < 10) // 10% Legendaria (Rarity 3)
+                picked = cards.Where(c => c.Rarity == 3).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+            else if (roll < 40) 
+                picked = cards.Where(c => c.Rarity == 2).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+            else 
+                picked = cards.Where(c => c.Rarity == 1).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+            
+            outputCards.Add(picked);
         }
 
-        return Ok(result);
+        // PERSISTENCIA: Cobrar y Guardar en Inventario
+        user.Money -= precioSobre;
+
+        foreach (var c in outputCards)
+        {
+            var inventario = await _db.PlayerCards
+                .FirstOrDefaultAsync(pc => pc.UserId == userId && pc.CardId == c.Id);
+
+            if (inventario != null) inventario.Quantity++;
+            else
+            {
+                _db.PlayerCards.Add(new PlayerCard { UserId = userId, CardId = c.Id, Quantity = 1 });
+            }
+        }
+
+        await _db.SaveChangesAsync();
+        return Ok(outputCards);
     }
+
+
 }
 
 
