@@ -62,6 +62,24 @@ public class DeckController : ControllerBase
 
         return Ok(deck);
     }
+    // GET api/firstDeck — Deck por Id
+    [HttpGet("{firstDeck}")]
+    public async Task<IActionResult> GetFirstDeck()
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var deck = await _db.Decks
+            .Include(d => d.DeckCards)
+                .ThenInclude(dc => dc.Card)
+                    .ThenInclude(c => c.Ability)
+            .FirstOrDefaultAsync(d => d.Id == id);
+
+        if (deck == null) return NotFound("Deck no encontrado");
+        if (deck.UserId != userId) return Forbid();
+
+        return Ok(deck);
+    }
+
 
     // POST api/deck — Crear deck
     [HttpPost]

@@ -49,3 +49,5 @@ obj/project.nuget.cache
 /publish
 /.vs
 /bin
+/bin
+/publish

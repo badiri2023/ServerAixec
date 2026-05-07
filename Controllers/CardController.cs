@@ -109,10 +109,13 @@ public class CardController : ControllerBase
 
         //Buscar al usuario y verificar dinero
         var user = await _db.Users.FindAsync(userId);
-        int precioSobre = 100; // Puedes cambiar esto según la expansión
+        int precioSobre = 100;
 
-        if (user == null || user.Money < precioSobre)
-            return BadRequest("No tienes suficiente dinero o el usuario no existe.");
+        if (user == null)
+            return BadRequest("El usuario no existe.");
+
+        if (user.Money < precioSobre)
+            return BadRequest("No tienes suficiente dinero.");
 
         // 3. Obtener cartas de esa expansión
         var cards = await _db.Cards.Where(c => c.Expansion == expansion).ToListAsync();
