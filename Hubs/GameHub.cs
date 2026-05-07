@@ -25,6 +25,4 @@ public class GameHub : Hub
         await Clients.Others.SendAsync("PlayerDisconnected", Context.ConnectionId);
         await base.OnDisconnectedAsync(exception);
     }
-
-
 }

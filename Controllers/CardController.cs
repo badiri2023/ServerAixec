@@ -19,8 +19,8 @@ public class CardController : ControllerBase
         _db = db;
     }
 
-
-    // GET api/card/1
+    // GET api/card/1  -> PÚBLICO
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCard(int id)
     {
@@ -33,7 +33,8 @@ public class CardController : ControllerBase
         return Ok(card);
     }
 
-    // GET api/card
+    // GET api/card  -> PÚBLICO
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAllCards()
     {
@@ -44,7 +45,7 @@ public class CardController : ControllerBase
         return Ok(cards);
     }
 
-    // Ver mis cartas
+    // Ver mis cartas (PROTEGIDO)
     [HttpGet("my-cards")]
     public async Task<IActionResult> GetMyCards()
     {
@@ -61,12 +62,9 @@ public class CardController : ControllerBase
                 pc.Card.Attack,
                 pc.Card.Defense,
                 pc.Card.Rarity,
-                // hemos añadido el maná y la expansion añadiendo el nombre d ela hbilidad
-                pc.Card.Mana,     
+                pc.Card.Mana,
                 pc.Card.Expansion,
-                Ability = new {   
-                    Name = pc.Card.Ability != null ? pc.Card.Ability.Name : "" 
-                },
+                Ability = new { Name = pc.Card.Ability != null ? pc.Card.Ability.Name : "" },
                 pc.Quantity
             })
             .ToListAsync();
@@ -74,7 +72,7 @@ public class CardController : ControllerBase
         return Ok(cards);
     }
 
-    // Dar una carta a un jugador (para admins o lógica de juego)
+    // Dar una carta a un jugador (PROTEGIDO)
     [HttpPost("give")]
     public async Task<IActionResult> GiveCard([FromBody] GiveCardDto dto)
     {
@@ -98,44 +96,39 @@ public class CardController : ControllerBase
         return Ok();
     }
 
-    // GET api/card/open/{expansion} — Abrir sobre
+    // GET api/card/open/{expansion} — Abrir sobre (PROTEGIDO)
     [HttpGet("open/{expansion}")]
     public async Task<IActionResult> OpenPack(string expansion)
     {
-        //Obtener ID del usuario del Token
         var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
         if (userIdString == null) return Unauthorized();
         int userId = int.Parse(userIdString);
 
-        //Buscar al usuario y verificar dinero
         var user = await _db.Users.FindAsync(userId);
-        int precioSobre = 100; // Puedes cambiar esto según la expansión
+        int precioSobre = 100;
 
         if (user == null || user.Money < precioSobre)
             return BadRequest("No tienes suficiente dinero o el usuario no existe.");
 
-        // 3. Obtener cartas de esa expansión
         var cards = await _db.Cards.Where(c => c.Expansion == expansion).ToListAsync();
         if (!cards.Any()) return NotFound("No hay cartas en esta expansión.");
 
-        // 4. Lógica de Gacha (Probabilidades)
         var random = new Random();
         var outputCards = new List<Card>();
         for (int i = 0; i < 3; i++)
         {
             double roll = random.NextDouble() * 100;
             Card picked;
-            if (roll < 10) // 10% Legendaria (Rarity 3)
+            if (roll < 10)
                 picked = cards.Where(c => c.Rarity == 3).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-            else if (roll < 40) 
+            else if (roll < 40)
                 picked = cards.Where(c => c.Rarity == 2).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-            else 
+            else
                 picked = cards.Where(c => c.Rarity == 1).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-            
+
             outputCards.Add(picked);
         }
 
-        // PERSISTENCIA: Cobrar y Guardar en Inventario
         user.Money -= precioSobre;
 
         foreach (var c in outputCards)
@@ -153,9 +146,6 @@ public class CardController : ControllerBase
         await _db.SaveChangesAsync();
         return Ok(outputCards);
     }
-
-
 }
-
 
 public record GiveCardDto(int UserId, int CardId);
