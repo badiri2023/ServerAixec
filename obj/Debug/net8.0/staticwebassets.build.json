@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"3vn1/CoIBkZb62O2gqIuY30WflmLQfYWCyug8ytxcN0=","Source":"AixecAPI","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "/+Mi2Gw3tk0D4BFP70xuQHrKDYdpPLhOc7VqvGsjBBE=",
+  "Source": "AixecAPI",
+  "BasePath": "_content/AixecAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
