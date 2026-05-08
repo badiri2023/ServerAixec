@@ -64,7 +64,7 @@ public class DeckController : ControllerBase
     }
     // GET api/firstDeck — Deck por Id
     [HttpGet("{firstDeck}")]
-    public async Task<IActionResult> GetFirstDeck()
+    public async Task<IActionResult> GetFirstDeck(int id)
     {
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 

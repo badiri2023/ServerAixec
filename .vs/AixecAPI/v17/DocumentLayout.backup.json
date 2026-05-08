@@ -3,20 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\deckcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\deckcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\migrations\\20260426092730_addeddecks.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:migrations\\20260426092730_addeddecks.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\migrations\\20260426090735_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:migrations\\20260426090735_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.platform\\nginx\\conf.d\\websockets.conf||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,6 +49,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\migrations\\20260426092730_addeddecks.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:migrations\\20260426092730_addeddecks.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\migrations\\20260426090735_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:migrations\\20260426090735_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\migrations\\20260426090735_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,40 +71,20 @@
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:migrations\\20260426092730_addeddecks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\aixecapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:aixecapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\playercard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\playercard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.platform\\nginx\\conf.d\\websockets.conf||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\aixecapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
@@ -105,10 +117,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\gameplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\gameplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -118,11 +126,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "AixecAPI.http",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\AixecAPI.http",
               "RelativeDocumentMoniker": "AixecAPI.http",
@@ -135,72 +143,162 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "20260426092730_addedDecks.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426092730_addedDecks.Designer.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260426092730_addedDecks.Designer.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426092730_addedDecks.Designer.cs",
-              "RelativeToolTip": "Migrations\\20260426092730_addedDecks.Designer.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACgAAAAmAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "GameState.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\GameState.cs",
+              "RelativeDocumentMoniker": "Models\\GameState.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\GameState.cs",
+              "RelativeToolTip": "Models\\GameState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T09:28:18.889Z",
+              "WhenOpened": "2026-05-07T17:18:58.544Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "20260426090735_InitialCreate.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.Designer.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260426090735_InitialCreate.Designer.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.Designer.cs",
-              "RelativeToolTip": "Migrations\\20260426090735_InitialCreate.Designer.cs",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAqwNEAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T09:28:13.916Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "20260426090735_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260426090735_InitialCreate.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.cs",
-              "RelativeToolTip": "Migrations\\20260426090735_InitialCreate.cs",
-              "ViewState": "AgIAAMUAAAAAAAAAAAAqwNMAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T09:27:50.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DeckController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\DeckController.cs",
-              "RelativeDocumentMoniker": "Controllers\\DeckController.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\DeckController.cs",
-              "RelativeToolTip": "Controllers\\DeckController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAcwDgAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T09:23:13.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "CardController.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\CardController.cs",
               "RelativeDocumentMoniker": "Controllers\\CardController.cs",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\CardController.cs",
               "RelativeToolTip": "Controllers\\CardController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAqwCgAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAqwJQAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-09T15:23:31.042Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameHub.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\GameHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\GameHub.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\GameHub.cs",
+              "RelativeToolTip": "Hubs\\GameHub.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T17:18:56.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAqwFgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T17:16:22.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DeckController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\DeckController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DeckController.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\DeckController.cs",
+              "RelativeToolTip": "Controllers\\DeckController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAiwEIAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T09:23:13.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\GameController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\GameController.cs",
+              "RelativeToolTip": "Controllers\\GameController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T15:15:07.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "Hubs\\ChatHub.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T11:22:42.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T17:12:18.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "websockets.conf",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf",
+              "RelativeDocumentMoniker": ".platform\\nginx\\conf.d\\websockets.conf",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf",
+              "RelativeToolTip": ".platform\\nginx\\conf.d\\websockets.conf",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-21T19:22:39.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAqwFoAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T17:03:26.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Card.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Card.cs",
+              "RelativeDocumentMoniker": "Models\\Card.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Card.cs",
+              "RelativeToolTip": "Models\\Card.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA0wA4AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T08:52:29.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Ability.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Ability.cs",
+              "RelativeDocumentMoniker": "Models\\Ability.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Ability.cs",
+              "RelativeToolTip": "Models\\Ability.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T15:14:15.482Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
@@ -208,38 +306,47 @@
               "RelativeToolTip": "Data\\AppDbContext.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAswBAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:07:18.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-26T17:07:18.146Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Ability.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Ability.cs",
-              "RelativeDocumentMoniker": "Models\\Ability.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Ability.cs",
-              "RelativeToolTip": "Models\\Ability.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAYAAAAAAAAAA==",
+              "DocumentIndex": 14,
+              "Title": "20260426090735_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260426090735_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.cs",
+              "RelativeToolTip": "Migrations\\20260426090735_InitialCreate.cs",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAqwNMAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T15:14:15.482Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-26T09:27:50.545Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Card.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Card.cs",
-              "RelativeDocumentMoniker": "Models\\Card.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Card.cs",
-              "RelativeToolTip": "Models\\Card.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAawAoAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "20260426090735_InitialCreate.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.Designer.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260426090735_InitialCreate.Designer.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426090735_InitialCreate.Designer.cs",
+              "RelativeToolTip": "Migrations\\20260426090735_InitialCreate.Designer.cs",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAqwNEAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T08:52:29.411Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-26T09:28:13.916Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
+              "Title": "20260426092730_addedDecks.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426092730_addedDecks.Designer.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260426092730_addedDecks.Designer.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426092730_addedDecks.Designer.cs",
+              "RelativeToolTip": "Migrations\\20260426092730_addedDecks.Designer.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T09:28:18.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "20260426092730_addedDecks.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Migrations\\20260426092730_addedDecks.cs",
               "RelativeDocumentMoniker": "Migrations\\20260426092730_addedDecks.cs",
@@ -247,12 +354,11 @@
               "RelativeToolTip": "Migrations\\20260426092730_addedDecks.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T09:27:39.883Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-26T09:27:39.883Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 17,
               "Title": "Deck.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Deck.cs",
               "RelativeDocumentMoniker": "Models\\Deck.cs",
@@ -260,51 +366,11 @@
               "RelativeToolTip": "Models\\Deck.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAYwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T08:55:15.701Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-26T08:55:15.701Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAgwEUAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:16:22.984Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "GameController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\GameController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\GameController.cs",
-              "RelativeToolTip": "Controllers\\GameController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T15:15:07.626Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:03:26.157Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "PlayerCard.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\PlayerCard.cs",
               "RelativeDocumentMoniker": "Models\\PlayerCard.cs",
@@ -316,19 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "GameHub.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\GameHub.cs",
-              "RelativeDocumentMoniker": "Hubs\\GameHub.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\GameHub.cs",
-              "RelativeToolTip": "Hubs\\GameHub.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAgwBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:18:56.423Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "Procfile",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Procfile",
               "RelativeDocumentMoniker": "Procfile",
@@ -340,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -348,24 +402,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-26T17:03:28.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-26T17:03:28.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "websockets.conf",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf",
-              "RelativeDocumentMoniker": ".platform\\nginx\\conf.d\\websockets.conf",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\.platform\\nginx\\conf.d\\websockets.conf",
-              "RelativeToolTip": ".platform\\nginx\\conf.d\\websockets.conf",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAQwBIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-04-21T19:22:39.277Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "AixecAPI",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\AixecAPI.csproj",
               "RelativeDocumentMoniker": "AixecAPI.csproj",
@@ -376,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "Game.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\Game.cs",
               "RelativeDocumentMoniker": "Models\\Game.cs",
@@ -388,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "JwtService.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Services\\JwtService.cs",
               "RelativeDocumentMoniker": "Services\\JwtService.cs",
@@ -400,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "AixecAPI.csproj",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\AixecAPI.csproj",
               "RelativeDocumentMoniker": "AixecAPI.csproj",
@@ -412,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "RankingController.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\RankingController.cs",
               "RelativeDocumentMoniker": "Controllers\\RankingController.cs",
@@ -424,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -436,19 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:12:18.931Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "GamePlayer.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\GamePlayer.cs",
               "RelativeDocumentMoniker": "Models\\GamePlayer.cs",
