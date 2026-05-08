@@ -15,20 +15,18 @@ public class RankingController : ControllerBase
         _db = db;
     }
 
-    // Top 10 jugadores por puntuación
-    [HttpGet]
+[HttpGet]
     public async Task<IActionResult> GetRanking()
     {
-        var ranking = await _db.GamePlayers
-            .Include(gp => gp.User)
-            .GroupBy(gp => gp.User.Username)
-            .Select(g => new {
-                Username = g.Key,
-                TotalScore = g.Sum(gp => gp.Score),
-                MaxLevel = g.Max(gp => gp.Level)
+        // Cogemos a todos los usuarios, los ordenamos por victorias de mayor a menor
+        var ranking = await _db.Users
+            .OrderByDescending(u => u.WonMatches)
+            .Select(u => new {
+                Username = u.Username,
+                WonMatches = u.WonMatches,       // Victorias
+                PlayedMatches = u.PlayedMatches, // Partidas totales jugadas
+                Level = u.Level                  // Nivel actual del jugador
             })
-            .OrderByDescending(r => r.TotalScore)
-            .Take(10)
             .ToListAsync();
 
         return Ok(ranking);
