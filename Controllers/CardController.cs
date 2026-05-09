@@ -114,7 +114,7 @@ public class CardController : ControllerBase
         if (user.Money < precioSobre)
             return BadRequest("No tienes suficiente dinero.");
 
-        var cards = await _db.Cards.Where(c => c.Expansion == expansion).ToListAsync();
+        var cards = await _db.Cards.Include(c => c.Ability).Where(c => c.Expansion == expansion).ToListAsync();
         if (!cards.Any()) return NotFound("No hay cartas en esta expansión.");
 
         var random = new Random();
