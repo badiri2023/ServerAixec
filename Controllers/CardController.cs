@@ -19,7 +19,7 @@ public class CardController : ControllerBase
         _db = db;
     }
 
-    // GET api/card/1  -> PÚBLICO
+    // GET api/card/1 
     [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCard(int id)
@@ -33,7 +33,7 @@ public class CardController : ControllerBase
         return Ok(card);
     }
 
-    // GET api/card  -> PÚBLICO
+    // GET api/card
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAllCards()

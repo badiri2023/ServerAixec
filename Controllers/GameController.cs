@@ -114,4 +114,44 @@ public class GameController : ControllerBase
 
         return Ok(new { nextUserId = players[nextIndex].UserId });
     }
+    // POST api/game/finish
+    [HttpPost("finish")]
+    public async Task<IActionResult> FinishGame([FromBody] FinishGameDto dto)
+    {
+        var winner = await _db.Users.FindAsync(dto.WinnerUserId);
+        var loser = await _db.Users.FindAsync(dto.LoserUserId);
+
+        if (winner == null || loser == null)
+            return NotFound("Uno o ambos usuarios no encontrados");
+
+        bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
+
+        winner.WonMatches++;
+        winner.PlayedMatches++;
+        loser.PlayedMatches++;
+
+        if (vsBot)
+        {
+            // El ganador es el jugador real (no el bot)
+            var realWinner = dto.WinnerUserId == 10 ? loser : winner;
+            var realLoser = dto.WinnerUserId == 10 ? winner : loser;
+
+            realWinner.Money += 25;
+            realLoser.Money += 10;
+        }
+        else
+        {
+            winner.Money += 50;
+            loser.Money += 25;
+        }
+
+        await _db.SaveChangesAsync();
+
+        return Ok(new
+        {
+            winner = new { winner.Id, winner.Username, winner.WonMatches, winner.PlayedMatches, winner.Money },
+            loser = new { loser.Id, loser.Username, loser.PlayedMatches, loser.Money }
+        });
+    }
+    public record FinishGameDto(int WinnerUserId, int LoserUserId);
 }

@@ -79,7 +79,7 @@ var app = builder.Build();
 
 
 
-// Aplicar migraciones autom�ticamente al arrancar
+// Aplicar migraciones automáticamente al arrancar
 
 app.UseCors();
 app.UseAuthentication();

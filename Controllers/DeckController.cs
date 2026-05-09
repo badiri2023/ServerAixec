@@ -47,31 +47,49 @@ public class DeckController : ControllerBase
 
     // GET api/deck/1 — Deck por Id
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetDeck(int id)
-    {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+public async Task<IActionResult> GetDeck(int id)
+{
+    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        var deck = await _db.Decks
-            .Include(d => d.DeckCards)
-                .ThenInclude(dc => dc.Card)
-                    .ThenInclude(c => c.Ability)
-            .FirstOrDefaultAsync(d => d.Id == id);
+    var deck = await _db.Decks
+        .Include(d => d.DeckCards)
+            .ThenInclude(dc => dc.Card)
+                .ThenInclude(c => c.Ability)
+        .Where(d => d.Id == id)
+        .Select(d => new {
+            d.Id,
+            d.Name,
+            Cards = d.DeckCards.Select(dc => new {
+                dc.Card.Id,
+                dc.Card.Name,
+                dc.Card.Type,
+                dc.Card.Attack,
+                dc.Card.Defense,
+                dc.Card.Rarity,
+                dc.Card.Mana,
+                dc.Card.Expansion,
+                dc.Card.ImageUrl,
+                Ability = dc.Card.Ability == null ? null : new {
+                    dc.Card.Ability.Id,
+                    dc.Card.Ability.Name,
+                    dc.Card.Ability.Description
+                }
+            })
+        })
+        .FirstOrDefaultAsync();
 
-        if (deck == null) return NotFound("Deck no encontrado");
-        if (deck.UserId != userId) return Forbid();
+    if (deck == null) return NotFound("Deck no encontrado");
 
-        return Ok(deck);
-    }
+    return Ok(deck);
+}
     // POST api/deck/generate — Generar mazo automático
     [HttpPost("generate")]
     public async Task<IActionResult> GenerateDeck([FromBody] GenerateDeckDto dto)
     {
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        // Cartas predeterminadas (12 criaturas + 3 magias = 15 fijas)
         var fixedCardIds = new List<int> { 1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36 };
 
-        // Cartas aleatorias: 5 del pool completo excluyendo las fijas
         var allCards = await _db.Cards
             .Where(c => c.Id != 0 && !fixedCardIds.Contains(c.Id))
             .ToListAsync();
@@ -98,11 +116,26 @@ public class DeckController : ControllerBase
         _db.Decks.Add(deck);
         await _db.SaveChangesAsync();
 
-        // Devolver el mazo completo con los datos de las cartas
+        // Devolver objeto plano sin referencias circulares
         var result = await _db.Decks
             .Include(d => d.DeckCards)
                 .ThenInclude(dc => dc.Card)
-            .FirstOrDefaultAsync(d => d.Id == deck.Id);
+            .Where(d => d.Id == deck.Id)
+            .Select(d => new {
+                d.Id,
+                d.Name,
+                Cards = d.DeckCards.Select(dc => new {
+                    dc.Card.Id,
+                    dc.Card.Name,
+                    dc.Card.Type,
+                    dc.Card.Attack,
+                    dc.Card.Defense,
+                    dc.Card.Rarity,
+                    dc.Card.Mana,
+                    dc.Card.Expansion
+                })
+            })
+            .FirstOrDefaultAsync();
 
         return Ok(result);
     }
