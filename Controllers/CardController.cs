@@ -40,6 +40,7 @@ public class CardController : ControllerBase
     {
         var cards = await _db.Cards
             .Include(c => c.Ability)
+            .Where(c => c.Id != 50)
             .ToListAsync();
 
         return Ok(cards);

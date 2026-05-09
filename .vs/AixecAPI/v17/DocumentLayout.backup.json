@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\deckcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\deckcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E3AD642-EF74-A663-9740-47625D12F515}|AixecAPI.csproj|c:\\users\\user\\onedrive\\documentos\\repos\\serveraixec\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -126,7 +126,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -143,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GameState.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Models\\GameState.cs",
               "RelativeDocumentMoniker": "Models\\GameState.cs",
@@ -151,12 +151,11 @@
               "RelativeToolTip": "Models\\GameState.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T17:18:58.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-07T17:18:58.544Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "CardController.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\CardController.cs",
               "RelativeDocumentMoniker": "Controllers\\CardController.cs",
@@ -164,12 +163,11 @@
               "RelativeToolTip": "Controllers\\CardController.cs",
               "ViewState": "AgIAAHIAAAAAAAAAAAAqwJQAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T15:23:31.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T15:23:31.042Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "GameHub.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\GameHub.cs",
               "RelativeDocumentMoniker": "Hubs\\GameHub.cs",
@@ -177,12 +175,11 @@
               "RelativeToolTip": "Hubs\\GameHub.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:18:56.423Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-26T17:18:56.423Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -201,14 +198,14 @@
               "RelativeDocumentMoniker": "Controllers\\DeckController.cs",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\DeckController.cs",
               "RelativeToolTip": "Controllers\\DeckController.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAiwEIAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAiwEMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-26T09:23:13.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "GameController.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Controllers\\GameController.cs",
               "RelativeDocumentMoniker": "Controllers\\GameController.cs",
@@ -216,18 +213,17 @@
               "RelativeToolTip": "Controllers\\GameController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwBoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T15:15:07.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T15:15:07.626Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ChatHub.cs",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\ChatHub.cs",
               "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Documentos\\repos\\ServerAixec\\Hubs\\ChatHub.cs",
               "RelativeToolTip": "Hubs\\ChatHub.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAzwBwAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-26T11:22:42.525Z",
               "EditorCaption": ""
@@ -242,8 +238,7 @@
               "RelativeToolTip": "Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:12:18.931Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-26T17:12:18.931Z"
             },
             {
               "$type": "Document",
@@ -255,8 +250,7 @@
               "RelativeToolTip": ".platform\\nginx\\conf.d\\websockets.conf",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-04-21T19:22:39.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-21T19:22:39.277Z"
             },
             {
               "$type": "Document",
@@ -268,8 +262,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAEwAAAAAAAAAAAAqwFoAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-26T17:03:26.157Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-26T17:03:26.157Z"
             },
             {
               "$type": "Document",
@@ -281,8 +274,7 @@
               "RelativeToolTip": "Models\\Card.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAA0wA4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T08:52:29.411Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-26T08:52:29.411Z"
             },
             {
               "$type": "Document",
