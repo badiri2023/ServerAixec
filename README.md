@@ -23,7 +23,7 @@ A continuación se describen todos los endpoints agrupados por lo que devuelven,
 
 ---
 
-# AuthController
+# AuthController  
 
 **Ruta:** `api/auth`
 
@@ -386,7 +386,11 @@ No envía nada.
 ### Response
 
 ```
-{  "id": 1,  "userId": 3,  "message": "hola a todos",  "createdAt": "2026-04-28T10:00:00"}
+{  
+	"id": 1,  
+	"userId": 3,  
+	"message": "hola familia",  
+	"createdAt": "2026-04-28T10:00:00"}
 ```
 
 ---
@@ -406,7 +410,20 @@ No envía nada.
 ### Response
 
 ```
-{  "id": 1,  "name": "Mi mazo",  "cardCount": 20,  "cards": [    {      "id": 1,      "name": "MagmaSlime",      "type": "Monstruo",      "rarity": 1    }  ]}
+{  
+	"id": 1,  
+	"name": "Mi mazo",  
+	"cardCount": 20,  
+	"cards": 
+		[    
+			{      
+			"id": 1,      
+			"name": "MagmaSlime",      
+			"type": "Monstruo",      
+			"rarity": 1    
+			}  
+		]
+}
 ```
 
 ### Errores posibles
@@ -432,13 +449,13 @@ Crea un mazo con las cartas especificadas en el array.
 ### Request
 
 ```
-{  "name": "Mi mazo personalizado",  "cardIds": [1, 2, 5, 6, 9, 15]}
+{ "name": "Mi mazo personalizado", "cardIds": [1, 2, 5, 6, 9, 15]}
 ```
 
 ### Response
 
 ```
-{  "id": 1,  "name": "Mi mazo personalizado",  "cardCount": 6}
+{ "id": 1, "name": "Mi mazo personalizado", "cardCount": 6}
 ```
 
 ### Errores posibles
@@ -455,13 +472,13 @@ Reemplaza el nombre y las cartas del mazo especificado por el id.
 ### Request
 
 ```
-{  "name": "Nuevo nombre",  "cardIds": [1, 2, 5, 6, 9, 15]}
+{ "name": "Nuevo nombre", "cardIds": [1, 2, 5, 6, 9, 15]}
 ```
 
 ### Response
 
 ```
-{  "id": 1,  "name": "Nuevo nombre",  "cardCount": 6}
+{ "id": 1, "name": "Nuevo nombre", "cardCount": 6}
 ```
 
 ### Errores posibles
