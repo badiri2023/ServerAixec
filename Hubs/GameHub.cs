@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AixecAPI.Data;
 using AixecAPI.Models;
-
+using System.Security.Claims;
 namespace AixecAPI.Hubs;
 
 // Estado en memoria de una partida
@@ -20,8 +20,9 @@ public class PlayerGameState
     public int UserId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string ConnectionId { get; set; } = string.Empty;
+    public List<int> HandCardIds { get; set; } = new();
     public int CardsInHand { get; set; }
-    public int Health { get; set; } = 20;
+    public int Health { get; set; } = 5;
     public int Mana { get; set; } = 1;
 }
 
@@ -33,6 +34,9 @@ public class FieldCard
     public int Attack { get; set; }
     public int Defense { get; set; }
     public bool HasAttacked { get; set; } = false;
+    
+    // Necesario para que Godot sepa en qué slot dibujar la carta
+    public int SlotIndex { get; set; } 
 }
 
 public class GameHub : Hub
@@ -49,61 +53,96 @@ public class GameHub : Hub
     {
         _db = db;
     }
-
+// =============================================
+    // HELPER: Obtener ID del Token JWT
+    // =============================================
+    private int GetUserId()
+    {
+        // Buscamos el ID del usuario en el token que envió Godot al conectar
+        var userIdString = Context.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        
+        if (int.TryParse(userIdString, out int userId))
+        {
+            return userId;
+        }
+        
+        // Si no hay token o es inválido, echamos al cliente
+        throw new HubException("Usuario no autenticado o token inválido.");
+    }
     // =============================================
     // CONEXIÓN A LA PARTIDA
     // =============================================
 
-    public async Task JoinGame(int gameId, int userId)
+public async Task JoinGame(int gameId)
     {
+        var userId = GetUserId(); 
+        var user = await _db.Users.FindAsync(userId);
+        if (user == null) return;
+
         await Groups.AddToGroupAsync(Context.ConnectionId, $"game-{gameId}");
 
-        // Registrar la conexión
-        ConnectionMap[Context.ConnectionId] = (gameId, userId);
+        if (!GameStates.TryGetValue(gameId, out var state))
+        {
+            state = new GameState { GameId = gameId };
+            GameStates[gameId] = state;
+        }
 
-        // Inicializar estado si no existe
-        if (!GameStates.ContainsKey(gameId))
-            GameStates[gameId] = new GameState { GameId = gameId };
-
-        var state = GameStates[gameId];
-
-        // Añadir jugador si no está ya
+        // Evitar que el mismo usuario entre dos veces
         if (!state.Players.Any(p => p.UserId == userId))
         {
-            var user = await _db.Users.FindAsync(userId);
             state.Players.Add(new PlayerGameState
             {
                 UserId = userId,
-                Username = user?.Username ?? "Desconocido",
-                ConnectionId = Context.ConnectionId,
-                CardsInHand = 0,
-                Health = 20,
-                Mana = 1
+                Username = user.Username,
+                ConnectionId = Context.ConnectionId
             });
         }
-        else
-        {
-            // Actualizar connectionId si reconecta
-            var player = state.Players.First(p => p.UserId == userId);
-            player.ConnectionId = Context.ConnectionId;
-        }
 
-        // Si ya hay 2 jugadores, empezar la partida
+        // FASE 1: SI HAY 2 JUGADORES, INICIAMOS LA PARTIDA
         if (state.Players.Count == 2 && state.Status == "waiting")
         {
             state.Status = "playing";
-            state.CurrentTurnUserId = state.Players[0].UserId;
-            await Clients.Group($"game-{gameId}")
-                .SendAsync("GameStarted", state);
-        }
-        else
-        {
-            await Clients.Group($"game-{gameId}")
-                .SendAsync("PlayerJoined", new { userId, state.Players.Count });
+            
+            // 1. Decidir quién empieza (al azar)
+            var random = new Random();
+            state.CurrentTurnUserId = state.Players[random.Next(2)].UserId;
+
+            // 2. Repartir cartas iniciales desde la DB
+            foreach (var player in state.Players)
+            {
+                // Buscamos su mazo activo (el primero que tenga cartas para este ejemplo)
+                var deck = await _db.Decks
+                    .Include(d => d.DeckCards)
+                    .FirstOrDefaultAsync(d => d.UserId == player.UserId);
+
+                if (deck != null && deck.DeckCards.Any())
+                {
+                    // Robamos 5 cartas al azar del mazo
+                    player.HandCardIds = deck.DeckCards
+                        .OrderBy(x => Guid.NewGuid())
+                        .Take(5)
+                        .Select(dc => dc.CardId)
+                        .ToList();
+                }
+                
+                player.Health = 20;
+                player.Mana = 1;
+            }
+
+            // Guardamos en la base de datos que la partida ha empezado
+            var gameDb = await _db.Games.FindAsync(gameId);
+            if (gameDb != null) {
+                gameDb.Status = "playing";
+                await _db.SaveChangesAsync();
+            }
         }
 
+        ConnectionMap[Context.ConnectionId] = (gameId, userId);
+        
+        // Avisamos a todos del nuevo estado
         await BroadcastGameState(gameId);
     }
+
 
     // =============================================
     // CARTAS EN MANO
@@ -123,51 +162,57 @@ public class GameHub : Hub
         }
     }
 
-    // =============================================
+// =============================================
     // JUGAR CARTA AL CAMPO
     // =============================================
 
-    public async Task PlayCard(int gameId, int userId, int cardId)
+    public async Task PlayCard(int gameId, int cardId, int slotIndex)
     {
         if (!GameStates.ContainsKey(gameId)) return;
 
         var state = GameStates[gameId];
+        
+        // ¡Seguridad! Extraemos el ID del token JWT
+        var userId = GetUserId(); 
 
-        // Verificar que es el turno del jugador
+        // 1. Verificar que es el turno del jugador
         if (state.CurrentTurnUserId != userId)
         {
             await Clients.Caller.SendAsync("Error", "No es tu turno");
             return;
         }
 
-        var card = await _db.Cards.FindAsync(cardId);
-        if (card == null)
+        var player = state.Players.FirstOrDefault(p => p.UserId == userId);
+        if (player == null) return;
+
+        // 2. Verificar que el jugador realmente tiene esa carta en la mano
+        if (!player.HandCardIds.Contains(cardId))
         {
-            await Clients.Caller.SendAsync("Error", "Carta no encontrada");
+            await Clients.Caller.SendAsync("Error", "No tienes esta carta en tu mano");
             return;
         }
 
-        // Añadir carta al campo
+        var card = await _db.Cards.FindAsync(cardId);
+        if (card == null) return;
+
+        // 3. Añadir carta al campo
         state.Field.Add(new FieldCard
         {
             UserId = userId,
             CardId = cardId,
             CardName = card.Name,
             Attack = card.Attack,
-            Defense = card.Defense
+            Defense = card.Defense,
+            SlotIndex = slotIndex // Guardamos el hueco
         });
 
-        // Reducir cartas en mano
-        var player = state.Players.FirstOrDefault(p => p.UserId == userId);
-        if (player != null && player.CardsInHand > 0)
-            player.CardsInHand--;
+        // 4. Quitar la carta de la mano del jugador
+        player.HandCardIds.Remove(cardId);
+        if (player.CardsInHand > 0) player.CardsInHand--;
 
-        await Clients.Group($"game-{gameId}")
-            .SendAsync("CardPlayed", new { userId, cardId, card.Name });
-
+        // 5. Avisamos a todos los clientes del nuevo estado del tablero
         await BroadcastGameState(gameId);
     }
-
     // =============================================
     // ATACAR
     // =============================================
