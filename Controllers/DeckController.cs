@@ -112,8 +112,10 @@ public async Task<IActionResult> GetDeck(int id)
                 CardId = cardId
             }).ToList()
         };
+        
 
         _db.Decks.Add(deck);
+
         await _db.SaveChangesAsync();
 
         // Devolver objeto plano sin referencias circulares

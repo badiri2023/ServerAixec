@@ -114,7 +114,7 @@ public class CardController : ControllerBase
         if (user.Money < precioSobre)
             return BadRequest("No tienes suficiente dinero.");
 
-        var cards = await _db.Cards.Include(c => c.Ability).Where(c => c.Expansion == expansion).ToListAsync();
+        var cards = await _db.Cards.Include(c => c.Ability).Where(c => c.Expansion == expansion || c.Expansion == "Equipamiento" || c.Expansion == "Magias").ToListAsync();
         if (!cards.Any()) return NotFound("No hay cartas en esta expansión.");
 
         var random = new Random();
@@ -122,13 +122,25 @@ public class CardController : ControllerBase
         for (int i = 0; i < 3; i++)
         {
             double roll = random.NextDouble() * 100;
+            double secondRoll = random.NextDouble() * 100;
+
             Card picked;
             if (roll < 10)
-                picked = cards.Where(c => c.Rarity == 3).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                if (secondRoll < 15)
+                    picked = cards.Where(c => c.Rarity == 3).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                else
+                    picked = cards.Where(c => c.Rarity == 3).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+
             else if (roll < 40)
-                picked = cards.Where(c => c.Rarity == 2).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                if (secondRoll < 15)
+                    picked = cards.Where(c => c.Rarity == 2).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                else
+                    picked = cards.Where(c => c.Rarity == 2).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
             else
-                picked = cards.Where(c => c.Rarity == 1).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                if (secondRoll < 15)
+                    picked = cards.Where(c => c.Rarity == 1).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+                else
+                    picked = cards.Where(c => c.Rarity == 1).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
 
             outputCards.Add(picked);
         }

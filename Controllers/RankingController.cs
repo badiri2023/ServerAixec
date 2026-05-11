@@ -22,11 +22,12 @@ public class RankingController : ControllerBase
         var ranking = await _db.Users
             .OrderByDescending(u => u.WonMatches)
             .Select(u => new {
+                Id = u.Id,
                 Username = u.Username,
                 WonMatches = u.WonMatches,       // Victorias
                 PlayedMatches = u.PlayedMatches, // Partidas totales jugadas
                 Level = u.Level                  // Nivel actual del jugador
-            })
+            }).Where(u => u.Id != 1 || u.Id != 10)
             .ToListAsync();
 
         return Ok(ranking);

@@ -40,6 +40,7 @@ public class AuthController : ControllerBase
         };
 
         _db.Users.Add(user);
+        
         await _db.SaveChangesAsync();
 
         return Ok(new { token = _jwt.GenerateToken(user) });
