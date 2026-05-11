@@ -45,7 +45,7 @@ public class GameHub : Hub
         ConnectionMap[Context.ConnectionId] = (gameId, userId);
         await Groups.AddToGroupAsync(Context.ConnectionId, $"game-{gameId}");
 
-        if (state.Players.Count == 2)
+        if (state.Players.Count == 1)
         {
             state.Status = "playing";
             state.CurrentTurnUserId = state.Players[0].UserId;
