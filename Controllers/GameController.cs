@@ -18,13 +18,11 @@ public class GameController : ControllerBase
     {
         _db = db;
     }
-
-    // DTOs / Records
     public record StartGameResponse(int GameId, List<int> PlayerDeck, List<int> BotDeck);
     public record ReportResultDto(int GameId, int WinnerUserId, int LoserUserId);
     public record FinishGameDto(int WinnerUserId, int LoserUserId);
 
-    // Crear una nueva sala
+    // POST api/game/create - Crear una nueva sala
     [HttpPost("create")]
     public async Task<IActionResult> CreateGame()
     {

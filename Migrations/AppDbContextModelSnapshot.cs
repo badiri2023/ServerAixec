@@ -38,7 +38,7 @@ namespace AixecAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ability");
+                    b.ToTable("Ability", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.Card", b =>
@@ -84,7 +84,7 @@ namespace AixecAPI.Migrations
 
                     b.HasIndex("AbilityId");
 
-                    b.ToTable("Cards");
+                    b.ToTable("Cards", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.ChatMessage", b =>
@@ -106,7 +106,7 @@ namespace AixecAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatMessages");
+                    b.ToTable("ChatMessages", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.Deck", b =>
@@ -126,7 +126,7 @@ namespace AixecAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Decks");
+                    b.ToTable("Decks", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.DeckCard", b =>
@@ -147,7 +147,7 @@ namespace AixecAPI.Migrations
 
                     b.HasIndex("DeckId");
 
-                    b.ToTable("DeckCards");
+                    b.ToTable("DeckCards", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.Game", b =>
@@ -168,7 +168,7 @@ namespace AixecAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.GamePlayer", b =>
@@ -198,7 +198,7 @@ namespace AixecAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GamePlayers");
+                    b.ToTable("GamePlayers", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.PlayerCard", b =>
@@ -222,7 +222,7 @@ namespace AixecAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PlayerCards");
+                    b.ToTable("PlayerCards", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.User", b =>
@@ -263,7 +263,7 @@ namespace AixecAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AixecAPI.Models.Card", b =>
