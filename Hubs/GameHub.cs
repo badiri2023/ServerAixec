@@ -52,14 +52,18 @@ public class GameHub : Hub
 
             foreach (var p in state.Players)
             {
-                var deckCards = await _db.DeckCards
+                // 1. Buscamos todas las cartas del mazo del jugador en la DB
+                var allDeckCards = await _db.DeckCards
                     .Where(dc => dc.Deck.UserId == p.UserId)
-                    .OrderBy(x => Guid.NewGuid())
-                    .Take(5)
                     .Select(dc => dc.CardId)
                     .ToListAsync();
                 
-                p.HandCardIds.AddRange(deckCards);
+                // 2. Las barajamos aleatoriamente
+                var shuffledDeck = allDeckCards.OrderBy(x => Guid.NewGuid()).ToList();
+
+                // 3. Repartimos: 5 a la mano y el resto al mazo para robar después
+                p.HandCardIds.AddRange(shuffledDeck.Take(5));
+                p.DeckCardIds.AddRange(shuffledDeck.Skip(5));
             }
         }
         await BroadcastGameState(gameId);
@@ -82,14 +86,37 @@ public class GameHub : Hub
             await BroadcastGameState(gameId);
     }
 
-    // --- PASAR TURNO ---
+// --- PASAR TURNO ---
     public async Task EndTurn(int gameId)
     {
         if (!GameStates.TryGetValue(gameId, out var state)) return;
         if (state.CurrentTurnUserId != GetUserId()) return;
 
+        // 1. Terminas tu turno
         GameEngine.ProcessEndTurn(state);
-        await BroadcastGameState(gameId);
+        
+        // Le avisamos a Godot que ahora es el turno del rival (el Bot)
+        await BroadcastGameState(gameId); 
+
+        // 2. ¿Es el turno del Bot (UserId 10)?
+        if (state.CurrentTurnUserId == 10)
+        {
+            // Simulamos que el bot está "pensando" durante 1.5 segundos
+            await Task.Delay(1500);
+
+            // El bot ejecuta su jugada (Baja sus cartas)
+            await GameEngine.PlayBotTurn(state, _db);
+            
+            // Avisamos a Godot para que dibuje la carta que bajó el bot
+            await BroadcastGameState(gameId);
+
+            // Esperamos 1.5 segundos para que veas la jugada
+            await Task.Delay(1500);
+
+            // El bot termina su turno y te lo devuelve
+            GameEngine.ProcessEndTurn(state);
+            await BroadcastGameState(gameId);
+        }
     }
 
     private async Task BroadcastGameState(int gameId)

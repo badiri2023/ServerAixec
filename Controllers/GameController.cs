@@ -40,7 +40,40 @@ public class GameController : ControllerBase
 
         return Ok(new { gameId = game.Id });
     }
+    
+// Crear una nueva sala contra el BOT
+    [HttpPost("create-bot")]
+    public async Task<IActionResult> CreateBotGame()
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
+        // Creamos la partida
+        var game = new Game();
+        _db.Games.Add(game);
+        await _db.SaveChangesAsync();
+
+        // Añadimos al jugador real
+        var player1 = new GamePlayer
+        {
+            GameId = game.Id,
+            UserId = userId,
+            IsCurrentTurn = true // El jugador empieza
+        };
+        _db.GamePlayers.Add(player1);
+
+        // Añadimos al Bot (poner el id del bot correctamente)
+        var botPlayer = new GamePlayer
+        {
+            GameId = game.Id,
+            UserId = 10, // ID del bot
+            IsCurrentTurn = false
+        };
+        _db.GamePlayers.Add(botPlayer);
+
+        await _db.SaveChangesAsync();
+
+        return Ok(new { gameId = game.Id });
+    }
     // Unirse a una sala
     [HttpPost("join/{gameId}")]
     public async Task<IActionResult> JoinGame(int gameId)
