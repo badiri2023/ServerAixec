@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized("Credenciales incorrectas");
 
-        return Ok(new { token = _jwt.GenerateToken(user) });
+        return Ok(new { token = _jwt.GenerateToken(user),id = user.Id });
     }
     [HttpPost("loginprueba")]
     public async Task<IActionResult> Loginprueba([FromBody] LoginDto dto)
