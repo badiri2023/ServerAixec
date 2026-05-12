@@ -210,34 +210,38 @@ public async Task<IActionResult> StartGame(string mode)
         return Ok(new { nextUserId = players[nextIndex].UserId });
     }
 
-[HttpPost("report-bot-result")]
-public async Task<IActionResult> ReportBotResult([FromBody] bool win)
-{
-    // El ID lo sacamos directamente del Token por seguridad
-    var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value);
-    var user = await _db.Users.FindAsync(userId);
+// Asegúrate de tener este record arriba de la clase o en un archivo de Models
+public record BotResultDto(bool Win);
 
+[HttpPost("report-bot-result")]
+public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
+{
+    // 1. Extraer ID del usuario del Token
+    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+    if (userIdClaim == null) return Unauthorized("Token no válido");
+    
+    int userId = int.Parse(userIdClaim.Value);
+    var user = await _db.Users.FindAsync(userId);
+    
     if (user == null) return NotFound("Usuario no encontrado");
 
+    // 2. Lógica de recompensas
     user.PlayedMatches++;
-    if (win)
+    if (dto.Win) // "Win" con Mayúscula porque C# suele mapear así los JSON
     {
         user.WonMatches++;
-        user.Money += 25; // Recompensa por ganar
+        user.Money += 25;
     }
     else
     {
-        user.Money += 10; // Recompensa por participar
+        user.Money += 10;
     }
 
     await _db.SaveChangesAsync();
     
-    return Ok(new { 
-        message = win ? "¡Victoria registrada!" : "Derrota registrada",
-        newMoney = user.Money 
-    });
+    // Devolvemos el nuevo saldo para que Godot lo confirme
+    return Ok(new { message = "OK", nuevoSaldo = user.Money });
 }
-
 
     // Reportar resultado final (cliente envía gameId, winner y loser)
 [HttpPost("report-result")]
