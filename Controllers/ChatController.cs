@@ -19,7 +19,7 @@ namespace AixecAPI.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GetHistory()
         {
-            // Cogemos los últimos 100 mensajes y los ordenamos por fecha
+            // se cogen los ultimos cien mensajes ordenados por fecha ascendente
             var mensajes = await _db.ChatMessages
                 .OrderByDescending(m => m.CreatedAt)
                 .Take(100)

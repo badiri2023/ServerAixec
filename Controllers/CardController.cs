@@ -46,7 +46,7 @@ public class CardController : ControllerBase
         return Ok(cards);
     }
 
-    // Ver mis cartas (PROTEGIDO)
+    // GET api/my-cards
     [HttpGet("my-cards")]
     public async Task<IActionResult> GetMyCards()
     {
@@ -73,7 +73,7 @@ public class CardController : ControllerBase
         return Ok(cards);
     }
 
-    // Dar una carta a un jugador (PROTEGIDO)
+    //POST api/give - Dar una carta a un jugador
     [HttpPost("give")]
     public async Task<IActionResult> GiveCard([FromBody] GiveCardDto dto)
     {
@@ -97,69 +97,122 @@ public class CardController : ControllerBase
         return Ok();
     }
 
-    // GET api/card/open/{expansion} — Abrir sobre (PROTEGIDO)
+    // GET api/card/open/{expansion} - Abrir sobre
     [HttpGet("open/{expansion}")]
     public async Task<IActionResult> OpenPack(string expansion)
     {
         var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        if (userIdString == null) return Unauthorized();
+
+        if (userIdString == null)
+            return Unauthorized();
+
         int userId = int.Parse(userIdString);
 
         var user = await _db.Users.FindAsync(userId);
-        int precioSobre = 100;
 
         if (user == null)
             return BadRequest("El usuario no existe.");
 
+        const int precioSobre = 100;
+
         if (user.Money < precioSobre)
             return BadRequest("No tienes suficiente dinero.");
 
-        var cards = await _db.Cards.Include(c => c.Ability).Where(c => c.Expansion == expansion || c.Expansion == "Equipamiento" || c.Expansion == "Magias").ToListAsync();
-        if (!cards.Any()) return NotFound("No hay cartas en esta expansión.");
+        var cards = await _db.Cards
+            .Include(c => c.Ability)
+            .Where(c =>
+                c.Expansion == expansion ||
+                c.Expansion == "Equipamiento" ||
+                c.Expansion == "Magias")
+            .ToListAsync();
 
-        var random = new Random();
+        if (!cards.Any())
+            return NotFound("No hay cartas en esta expansión.");
+
+        var random = Random.Shared;
+
         var outputCards = new List<Card>();
+
         for (int i = 0; i < 3; i++)
         {
-            double roll = random.NextDouble() * 100;
-            double secondRoll = random.NextDouble() * 100;
+            double rarityRoll = random.NextDouble() * 100;
+            double specialRoll = random.NextDouble() * 100;
+
+            int rarity;
+
+            // 10% -> rareza 3
+            // 30% -> rareza 2
+            // 60% -> rareza 1
+
+            if (rarityRoll < 10)
+                rarity = 3;
+            else if (rarityRoll < 40)
+                rarity = 2;
+            else
+                rarity = 1;
+
+            bool isSpecialCard = specialRoll < 15;
+
+            List<Card> filteredCards;
+
+            if (isSpecialCard)
+            {
+                filteredCards = cards
+                    .Where(c =>
+                        c.Rarity == rarity &&
+                        (c.Expansion == "Equipamiento" ||
+                         c.Expansion == "Magias"))
+                    .ToList();
+            }
+            else
+            {
+                filteredCards = cards
+                    .Where(c =>
+                        c.Rarity == rarity &&
+                        c.Expansion == expansion)
+                    .ToList();
+            }
 
             Card picked;
-            if (roll < 10)
-                if (secondRoll < 15)
-                    picked = cards.Where(c => c.Rarity == 3).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-                else
-                    picked = cards.Where(c => c.Rarity == 3).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
 
-            else if (roll < 40)
-                if (secondRoll < 15)
-                    picked = cards.Where(c => c.Rarity == 2).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-                else
-                    picked = cards.Where(c => c.Rarity == 2).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+            if (filteredCards.Any())
+            {
+                picked = filteredCards[random.Next(filteredCards.Count)];
+            }
             else
-                if (secondRoll < 15)
-                    picked = cards.Where(c => c.Rarity == 1).Where(c => c.Expansion == "Equipamiento" || c.Expansion == "Magias").OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
-                else
-                    picked = cards.Where(c => c.Rarity == 1).Where(c => c.Expansion == expansion).OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? cards[0];
+            {
+                picked = cards[random.Next(cards.Count)];
+            }
 
             outputCards.Add(picked);
         }
 
         user.Money -= precioSobre;
 
-        foreach (var c in outputCards)
+        foreach (var card in outputCards)
         {
-            var inventario = await _db.PlayerCards
-                .FirstOrDefaultAsync(pc => pc.UserId == userId && pc.CardId == c.Id);
+            var inventoryCard = await _db.PlayerCards
+                .FirstOrDefaultAsync(pc =>
+                    pc.UserId == userId &&
+                    pc.CardId == card.Id);
 
-            if (inventario != null) inventario.Quantity++;
+            if (inventoryCard != null)
+            {
+                inventoryCard.Quantity++;
+            }
             else
             {
-                _db.PlayerCards.Add(new PlayerCard { UserId = userId, CardId = c.Id, Quantity = 1 });
+                _db.PlayerCards.Add(new PlayerCard
+                {
+                    UserId = userId,
+                    CardId = card.Id,
+                    Quantity = 1
+                });
             }
         }
 
         await _db.SaveChangesAsync();
+
         return Ok(outputCards);
     }
 }

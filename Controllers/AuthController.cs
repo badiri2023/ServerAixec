@@ -69,21 +69,18 @@ public class AuthController : ControllerBase
 
 // GET: api/auth/perfil
 [HttpGet("perfil")]
-//Solo usuarios logueados pueden ver su dinero
+//El authorize hace que se necesite token para que funcione
 [Authorize]
 public async Task<IActionResult> GetPerfil()
 {
-    // Extraemos el ID del usuario desde el Token JWT
+    // no fa falta que envie jugador, se puede coger con los claims
     var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
     if (userIdString == null) return Unauthorized();
-    
     int userId = int.Parse(userIdString);
 
-    // Buscamos al usuario en la base de datos
     var user = await _db.Users.FindAsync(userId);
     if (user == null) return NotFound();
 
-    // Devolvemos la información necesaria (incluyendo Money)
     return Ok(new {
         id = user.Id,
         username = user.Username,

@@ -47,41 +47,41 @@ public class DeckController : ControllerBase
 
     // GET api/deck/1 — Deck por Id
     [HttpGet("{id}")]
-public async Task<IActionResult> GetDeck(int id)
-{
-    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    public async Task<IActionResult> GetDeck(int id)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-    var deck = await _db.Decks
-        .Include(d => d.DeckCards)
-            .ThenInclude(dc => dc.Card)
-                .ThenInclude(c => c.Ability)
-        .Where(d => d.Id == id)
-        .Select(d => new {
-            d.Id,
-            d.Name,
-            Cards = d.DeckCards.Select(dc => new {
-                dc.Card.Id,
-                dc.Card.Name,
-                dc.Card.Type,
-                dc.Card.Attack,
-                dc.Card.Defense,
-                dc.Card.Rarity,
-                dc.Card.Mana,
-                dc.Card.Expansion,
-                dc.Card.ImageUrl,
-                Ability = dc.Card.Ability == null ? null : new {
-                    dc.Card.Ability.Id,
-                    dc.Card.Ability.Name,
-                    dc.Card.Ability.Description
-                }
+        var deck = await _db.Decks
+            .Include(d => d.DeckCards)
+                .ThenInclude(dc => dc.Card)
+                    .ThenInclude(c => c.Ability)
+            .Where(d => d.Id == id)
+            .Select(d => new {
+                d.Id,
+                d.Name,
+                Cards = d.DeckCards.Select(dc => new {
+                    dc.Card.Id,
+                    dc.Card.Name,
+                    dc.Card.Type,
+                    dc.Card.Attack,
+                    dc.Card.Defense,
+                    dc.Card.Rarity,
+                    dc.Card.Mana,
+                    dc.Card.Expansion,
+                    dc.Card.ImageUrl,
+                    Ability = dc.Card.Ability == null ? null : new {
+                        dc.Card.Ability.Id,
+                        dc.Card.Ability.Name,
+                        dc.Card.Ability.Description
+                    }
+                })
             })
-        })
-        .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync();
 
-    if (deck == null) return NotFound("Deck no encontrado");
+        if (deck == null) return NotFound("Deck no encontrado");
 
-    return Ok(deck);
-}
+        return Ok(deck);
+    }
     // POST api/deck/generate — Generar mazo automático
     [HttpPost("generate")]
     public async Task<IActionResult> GenerateDeck([FromBody] GenerateDeckDto dto)
@@ -118,7 +118,6 @@ public async Task<IActionResult> GetDeck(int id)
 
         await _db.SaveChangesAsync();
 
-        // Devolver objeto plano sin referencias circulares
         var result = await _db.Decks
             .Include(d => d.DeckCards)
                 .ThenInclude(dc => dc.Card)
@@ -205,10 +204,7 @@ public async Task<IActionResult> GetDeck(int id)
         if (deck == null) return NotFound("Deck no encontrado");
         if (deck.UserId != userId) return Forbid();
 
-        // Actualizar nombre
         deck.Name = dto.Name;
-
-        // Reemplazar cartas
         _db.DeckCards.RemoveRange(deck.DeckCards);
         deck.DeckCards = dto.CardIds.Select(cardId => new DeckCard
         {
