@@ -79,54 +79,64 @@ public class GameController : ControllerBase
 
     // Iniciar partida: crea partida y devuelve decks (player + bot)
     // mode: "bot_fixed" | "bot_random" (o cualquier otra cadena para random por defecto)
-    [HttpPost("start/{mode}")]
-    public async Task<IActionResult> StartGame(string mode)
+[HttpPost("start/{mode}")]
+public async Task<IActionResult> StartGame(string mode)
+{
+    // 1. Obtener ID del usuario desde el Token
+    var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+    if (userIdClaim == null) return Unauthorized();
+    int userId = int.Parse(userIdClaim.Value);
+
+    // 2. Crear partida en DB
+    var game = new Game { Status = "playing", CurrentTurn = 1 };
+    _db.Games.Add(game);
+    await _db.SaveChangesAsync();
+
+    // 3. Asociar jugador
+    _db.GamePlayers.Add(new GamePlayer { GameId = game.Id, UserId = userId, IsCurrentTurn = true });
+    await _db.SaveChangesAsync();
+
+    // 4. OBTENER EL DECK (CORREGIDO: Solo el último mazo)
+    var lastDeck = await _db.Decks
+        .Where(d => d.UserId == userId)
+        .OrderByDescending(d => d.Id) 
+        .Include(d => d.DeckCards)
+        .FirstOrDefaultAsync();
+
+    // Forzamos explícitamente que sea una lista de Integers
+    List<int> playerDeckIds = new List<int>();
+
+    if (lastDeck != null && lastDeck.DeckCards.Any())
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-        // 1) Crear partida simple en DB
-        var game = new Game();
-        _db.Games.Add(game);
-        await _db.SaveChangesAsync();
-
-        // 2) Asociar jugador a la partida
-        _db.GamePlayers.Add(new GamePlayer { GameId = game.Id, UserId = userId, IsCurrentTurn = true });
-        await _db.SaveChangesAsync();
-
-        // 3) Obtener deck del jugador (IDs) desde sus decks guardados
-        var playerDeck = await _db.Decks
-            .Where(d => d.UserId == userId)
-            .SelectMany(d => d.DeckCards.Select(dc => dc.CardId))
-            .ToListAsync();
-
-        // Si no tiene deck, fallback a un conjunto por defecto
-        if (!playerDeck.Any())
-            playerDeck = new List<int> { 1,2,3,4,5,11,12,13,14,15 };
-
-        // 4) Generar deck del bot (fijo o aleatorio)
-        List<int> botDeck;
-        if (mode == "bot_fixed")
-        {
-            botDeck = new List<int> { 21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 };
-        }
-        else
-        {
-            // Aleatorio: tomar 20 cartas distintas de la tabla Cards
-            botDeck = await _db.Cards
-                .OrderBy(x => Guid.NewGuid())
-                .Take(20)
-                .Select(c => c.Id)
-                .ToListAsync();
-
-            if (!botDeck.Any())
-                botDeck = new List<int> { 21,22,23,24,25,26,27,28,29,30 };
-        }
-
-        // 5) Responder con gameId y decks (solo IDs)
-        var response = new StartGameResponse(game.Id, playerDeck, botDeck);
-        return Ok(response);
+        playerDeckIds = lastDeck.DeckCards.Select(dc => dc.CardId).ToList();
+    }
+    else
+    {
+        // Fallback: mazo básico si no tiene nada
+        playerDeckIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     }
 
+    // 5. GENERAR MAZO DEL BOT
+    List<int> botDeckIds;
+    if (mode == "bot_fixed")
+    {
+        botDeckIds = new List<int> { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
+    }
+    else
+    {
+        botDeckIds = await _db.Cards
+            .Where(c => c.Id != 50) 
+            .OrderBy(x => Guid.NewGuid()) 
+            .Take(20)
+            .Select(c => c.Id)
+            .ToListAsync();
+    }
+
+    // 6. Enviar respuesta
+    return Ok(new StartGameResponse(game.Id, playerDeckIds, botDeckIds));
+}
+ 
+ 
     // Unirse a una sala
     [HttpPost("join/{gameId}")]
     public async Task<IActionResult> JoinGame(int gameId)
