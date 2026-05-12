@@ -211,42 +211,59 @@ public async Task<IActionResult> StartGame(string mode)
     }
 
     // Reportar resultado final (cliente envía gameId, winner y loser)
-    [HttpPost("report-result")]
-    public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
+[HttpPost("report-result")]
+public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
+{
+    // 1. Validar que la partida existe (si esto falla, da 404)
+    var game = await _db.Games.FindAsync(dto.GameId);
+    if (game == null) return NotFound("Partida no encontrada");
+
+    // 2. Buscar usuarios
+    var winner = await _db.Users.FindAsync(dto.WinnerUserId);
+    var loser = await _db.Users.FindAsync(dto.LoserUserId);
+    if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
+
+    // 3. Marcar partida como terminada
+    game.Status = "finished";
+
+    // 4. Lógica de Recompensas y Estadísticas
+    bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
+
+    if (vsBot)
     {
-        var game = await _db.Games.FindAsync(dto.GameId);
-        if (game == null) return NotFound("Partida no encontrada");
+        // Si hay un bot, identificamos quién es el humano (el que no es el 10)
+        var humano = dto.WinnerUserId == 10 ? loser : winner;
+        bool ganoHumano = (dto.WinnerUserId != 10);
 
-        var winner = await _db.Users.FindAsync(dto.WinnerUserId);
-        var loser = await _db.Users.FindAsync(dto.LoserUserId);
-        if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
-
-        // Actualizar estadísticas básicas
-        winner.WonMatches++;
-        winner.PlayedMatches++;
-        loser.PlayedMatches++;
-
-        // Recompensas simples (ajusta valores si quieres)
-        bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
-        if (vsBot)
+        humano.PlayedMatches++;
+        if (ganoHumano)
         {
-            var realWinner = dto.WinnerUserId == 10 ? loser : winner;
-            var realLoser = dto.WinnerUserId == 10 ? winner : loser;
-
-            realWinner.Money += 25;
-            realLoser.Money += 10;
+            humano.WonMatches++;
+            humano.Money += 25; // Oro por ganar al bot
         }
         else
         {
-            winner.Money += 50;
-            loser.Money += 25;
+            humano.Money += 10; // Oro de consolación por perder con bot
         }
+    }
+    else
+    {
+        // PvP Real (Entre dos humanos)
+        winner.WonMatches++;
+        winner.PlayedMatches++;
+        winner.Money += 50;
 
-        await _db.SaveChangesAsync();
-        return Ok(new { message = "Resultado registrado" });
+        loser.PlayedMatches++;
+        loser.Money += 25;
     }
 
-    // POST api/game/finish (mantengo para compatibilidad con lógica previa)
+    await _db.SaveChangesAsync();
+    return Ok(new { message = "Resultado registrado y recompensas entregadas" });
+}
+
+
+
+    // POST api/game/finish 
     [HttpPost("finish")]
     public async Task<IActionResult> FinishGame([FromBody] FinishGameDto dto)
     {
