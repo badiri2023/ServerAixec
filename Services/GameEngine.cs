@@ -7,12 +7,17 @@ namespace AixecAPI.Logic;
 
 public static class GameEngine
 {
-    // Constantes sincronizadas con tu Godot (GameUI.gd)
+
     public const int VIDA_MAXIMA = 5;
     public const int MANA_MAXIMO = 8;
     public const int MAX_MONSTRUOS = 3;
 
-public static string? TryPlayCard(GameState state, int userId, Card cardData, int slotIndex)
+    // Rango de IDs de los slots
+    public static readonly int[] SLOTS_MONSTRUOS = { 0, 1, 2 };
+    public static readonly int[] SLOTS_MAGIAS = { 3, 4, 5 };
+    public const int SLOT_EQUIPO = 6;
+
+    public static string? TryPlayCard(GameState state, int userId, Card cardData, int slotIndex)
     {
         var player = state.Players.FirstOrDefault(p => p.UserId == userId);
         if (player == null) return "Jugador no encontrado.";
@@ -54,6 +59,9 @@ public static string? TryPlayCard(GameState state, int userId, Card cardData, in
         // Todo salió bien
         return null; 
     }
+
+
+
     public static string? TryAttack(GameState state, int userId, int attackerId, int? targetId)
     {
         if (state.CurrentTurnUserId != userId) return "No es tu turno.";

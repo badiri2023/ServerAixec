@@ -19,6 +19,11 @@ public class GameController : ControllerBase
         _db = db;
     }
 
+    // DTOs / Records
+    public record StartGameResponse(int GameId, List<int> PlayerDeck, List<int> BotDeck);
+    public record ReportResultDto(int GameId, int WinnerUserId, int LoserUserId);
+    public record FinishGameDto(int WinnerUserId, int LoserUserId);
+
     // Crear una nueva sala
     [HttpPost("create")]
     public async Task<IActionResult> CreateGame()
@@ -41,27 +46,24 @@ public class GameController : ControllerBase
         return Ok(new { gameId = game.Id });
     }
     
-// Crear una nueva sala contra el BOT
+    // Crear una nueva sala contra el BOT (mantengo por compatibilidad)
     [HttpPost("create-bot")]
     public async Task<IActionResult> CreateBotGame()
     {
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        // Creamos la partida
         var game = new Game();
         _db.Games.Add(game);
         await _db.SaveChangesAsync();
 
-        // Añadimos al jugador real
         var player1 = new GamePlayer
         {
             GameId = game.Id,
             UserId = userId,
-            IsCurrentTurn = true // El jugador empieza
+            IsCurrentTurn = true
         };
         _db.GamePlayers.Add(player1);
 
-        // Añadimos al Bot (poner el id del bot correctamente)
         var botPlayer = new GamePlayer
         {
             GameId = game.Id,
@@ -74,6 +76,57 @@ public class GameController : ControllerBase
 
         return Ok(new { gameId = game.Id });
     }
+
+    // Iniciar partida: crea partida y devuelve decks (player + bot)
+    // mode: "bot_fixed" | "bot_random" (o cualquier otra cadena para random por defecto)
+    [HttpPost("start/{mode}")]
+    public async Task<IActionResult> StartGame(string mode)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        // 1) Crear partida simple en DB
+        var game = new Game();
+        _db.Games.Add(game);
+        await _db.SaveChangesAsync();
+
+        // 2) Asociar jugador a la partida
+        _db.GamePlayers.Add(new GamePlayer { GameId = game.Id, UserId = userId, IsCurrentTurn = true });
+        await _db.SaveChangesAsync();
+
+        // 3) Obtener deck del jugador (IDs) desde sus decks guardados
+        var playerDeck = await _db.Decks
+            .Where(d => d.UserId == userId)
+            .SelectMany(d => d.DeckCards.Select(dc => dc.CardId))
+            .ToListAsync();
+
+        // Si no tiene deck, fallback a un conjunto por defecto
+        if (!playerDeck.Any())
+            playerDeck = new List<int> { 1,2,3,4,5,11,12,13,14,15 };
+
+        // 4) Generar deck del bot (fijo o aleatorio)
+        List<int> botDeck;
+        if (mode == "bot_fixed")
+        {
+            botDeck = new List<int> { 21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 };
+        }
+        else
+        {
+            // Aleatorio: tomar 20 cartas distintas de la tabla Cards
+            botDeck = await _db.Cards
+                .OrderBy(x => Guid.NewGuid())
+                .Take(20)
+                .Select(c => c.Id)
+                .ToListAsync();
+
+            if (!botDeck.Any())
+                botDeck = new List<int> { 21,22,23,24,25,26,27,28,29,30 };
+        }
+
+        // 5) Responder con gameId y decks (solo IDs)
+        var response = new StartGameResponse(game.Id, playerDeck, botDeck);
+        return Ok(response);
+    }
+
     // Unirse a una sala
     [HttpPost("join/{gameId}")]
     public async Task<IActionResult> JoinGame(int gameId)
@@ -120,7 +173,7 @@ public class GameController : ControllerBase
         });
     }
 
-    // Pasar turno
+    // Pasar turno (mantengo por compatibilidad, aunque la lógica de juego está en cliente)
     [HttpPost("{gameId}/turn")]
     public async Task<IActionResult> NextTurn(int gameId)
     {
@@ -136,7 +189,6 @@ public class GameController : ControllerBase
         if (currentPlayer == null || !currentPlayer.IsCurrentTurn)
             return BadRequest("No es tu turno");
 
-        // Pasar turno al siguiente jugador
         currentPlayer.IsCurrentTurn = false;
         var players = game.Players.ToList();
         var nextIndex = (players.IndexOf(currentPlayer) + 1) % players.Count;
@@ -147,7 +199,44 @@ public class GameController : ControllerBase
 
         return Ok(new { nextUserId = players[nextIndex].UserId });
     }
-    // POST api/game/finish
+
+    // Reportar resultado final (cliente envía gameId, winner y loser)
+    [HttpPost("report-result")]
+    public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
+    {
+        var game = await _db.Games.FindAsync(dto.GameId);
+        if (game == null) return NotFound("Partida no encontrada");
+
+        var winner = await _db.Users.FindAsync(dto.WinnerUserId);
+        var loser = await _db.Users.FindAsync(dto.LoserUserId);
+        if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
+
+        // Actualizar estadísticas básicas
+        winner.WonMatches++;
+        winner.PlayedMatches++;
+        loser.PlayedMatches++;
+
+        // Recompensas simples (ajusta valores si quieres)
+        bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
+        if (vsBot)
+        {
+            var realWinner = dto.WinnerUserId == 10 ? loser : winner;
+            var realLoser = dto.WinnerUserId == 10 ? winner : loser;
+
+            realWinner.Money += 25;
+            realLoser.Money += 10;
+        }
+        else
+        {
+            winner.Money += 50;
+            loser.Money += 25;
+        }
+
+        await _db.SaveChangesAsync();
+        return Ok(new { message = "Resultado registrado" });
+    }
+
+    // POST api/game/finish (mantengo para compatibilidad con lógica previa)
     [HttpPost("finish")]
     public async Task<IActionResult> FinishGame([FromBody] FinishGameDto dto)
     {
@@ -165,7 +254,6 @@ public class GameController : ControllerBase
 
         if (vsBot)
         {
-            // El ganador es el jugador real (no el bot)
             var realWinner = dto.WinnerUserId == 10 ? loser : winner;
             var realLoser = dto.WinnerUserId == 10 ? winner : loser;
 
@@ -186,5 +274,5 @@ public class GameController : ControllerBase
             loser = new { loser.Id, loser.Username, loser.PlayedMatches, loser.Money }
         });
     }
-    public record FinishGameDto(int WinnerUserId, int LoserUserId);
 }
+
