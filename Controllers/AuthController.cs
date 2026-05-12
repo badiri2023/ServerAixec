@@ -43,8 +43,29 @@ public class AuthController : ControllerBase
         
         await _db.SaveChangesAsync();
 
+        var nuevoMazo = new Deck {
+            Name = "Mazo Inicial", 
+            UserId = user.Id 
+        };
+        _db.Decks.Add(nuevoMazo);
+        await _db.SaveChangesAsync();
+
+        var idsCartasIniciales = new List<int> {1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27};
+
+        foreach (var cartaId in idsCartasIniciales){
+            _db.DeckCards.Add(new DeckCard{ 
+                DeckId = nuevoMazo.Id, 
+                CardId = cartaId 
+            });
+        }
+
+        await _db.SaveChangesAsync();
+
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
+
+
+
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
