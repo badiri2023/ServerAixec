@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized("Credenciales incorrectas");
 
-        return Ok(new { token = _jwt.GenerateToken(user), id = user.Id, username = user.Username});
+        return Ok(new { token = _jwt.GenerateToken(user),id = user.Id });
     }
     [HttpPost("loginprueba")]
     public async Task<IActionResult> Loginprueba([FromBody] LoginDto dto)
@@ -67,30 +67,30 @@ public class AuthController : ControllerBase
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
 
-    // GET: api/auth/perfil
-    [HttpGet("perfil")]
-    //Solo usuarios logueados pueden ver su dinero
-    [Authorize]
-    public async Task<IActionResult> GetPerfil()
-    {
-        // Extraemos el ID del usuario desde el Token JWT
-        var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        if (userIdString == null) return Unauthorized();
-        
-        int userId = int.Parse(userIdString);
+// GET: api/auth/perfil
+[HttpGet("perfil")]
+//Solo usuarios logueados pueden ver su dinero
+[Authorize]
+public async Task<IActionResult> GetPerfil()
+{
+    // Extraemos el ID del usuario desde el Token JWT
+    var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    if (userIdString == null) return Unauthorized();
+    
+    int userId = int.Parse(userIdString);
 
-        // Buscamos al usuario en la base de datos
-        var user = await _db.Users.FindAsync(userId);
-        if (user == null) return NotFound();
+    // Buscamos al usuario en la base de datos
+    var user = await _db.Users.FindAsync(userId);
+    if (user == null) return NotFound();
 
-        // Devolvemos la información necesaria (incluyendo Money)
-        return Ok(new {
-            id = user.Id,
-            username = user.Username,
-            money = user.Money,
-            level = user.Level
-        });
-    }
+    // Devolvemos la información necesaria (incluyendo Money)
+    return Ok(new {
+        id = user.Id,
+        username = user.Username,
+        money = user.Money,
+        level = user.Level
+    });
+}
 
 
 
