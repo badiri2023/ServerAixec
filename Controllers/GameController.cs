@@ -210,6 +210,35 @@ public async Task<IActionResult> StartGame(string mode)
         return Ok(new { nextUserId = players[nextIndex].UserId });
     }
 
+[HttpPost("report-bot-result")]
+public async Task<IActionResult> ReportBotResult([FromBody] bool win)
+{
+    // El ID lo sacamos directamente del Token por seguridad
+    var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value);
+    var user = await _db.Users.FindAsync(userId);
+
+    if (user == null) return NotFound("Usuario no encontrado");
+
+    user.PlayedMatches++;
+    if (win)
+    {
+        user.WonMatches++;
+        user.Money += 25; // Recompensa por ganar
+    }
+    else
+    {
+        user.Money += 10; // Recompensa por participar
+    }
+
+    await _db.SaveChangesAsync();
+    
+    return Ok(new { 
+        message = win ? "¡Victoria registrada!" : "Derrota registrada",
+        newMoney = user.Money 
+    });
+}
+
+
     // Reportar resultado final (cliente envía gameId, winner y loser)
 [HttpPost("report-result")]
 public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
