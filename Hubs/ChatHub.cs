@@ -14,22 +14,29 @@ namespace AixecAPI.Hubs
             _db = db;
         }
 
-        public async Task EnviarMensaje(string usuario, string texto)
+public async Task EnviarMensaje(string usuario, string texto)
+{
+    try 
+    {
+        var nuevoMensaje = new ChatMessage 
+        { 
+            Username = usuario, 
+            Text = texto,
+            CreatedAt = DateTime.UtcNow 
+        };
+
+        _db.ChatMessages.Add(nuevoMensaje);
+        await _db.SaveChangesAsync();
+
+        await Clients.All.SendAsync("RecibirMensaje", usuario, texto);
+    }
+    catch (Exception ex)
+    {
+        // Esto imprimirá el error exacto en la consola de tu API
+        Console.WriteLine($"🔥🔥 ERROR AL GUARDAR EL MENSAJE: {ex.Message}");
+        if (ex.InnerException != null)
         {
-            //CREAMOS EL REGISTRO PARA LA BASE DE DATOS
-            var nuevoMensaje = new ChatMessage 
-            { 
-                Username = usuario, 
-                Text = texto,
-                CreatedAt = DateTime.UtcNow 
-            };
-
-            //LO GUARDAMOS (Esto es lo que da la PERSISTENCIA)
-            _db.ChatMessages.Add(nuevoMensaje);
-            await _db.SaveChangesAsync();
-
-            //REENVIAMOS A TODOS
-            await Clients.All.SendAsync("RecibirMensaje", usuario, texto);
+            Console.WriteLine($"🔥🔥 DETALLE INTERNO: {ex.InnerException.Message}");
         }
     }
 }
