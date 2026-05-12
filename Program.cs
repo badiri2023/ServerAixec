@@ -63,7 +63,7 @@ var app = builder.Build();
 app.UseCors();           // Primero permitir acceso
 app.UseAuthentication();  // Quién eres
 app.UseAuthorization();   // Qué puedes hacer
-
+app.UseWebSockets();
 app.MapControllers();
 
 // Mapeamos el Hub. Usa una sola ruta para evitar conflictos.

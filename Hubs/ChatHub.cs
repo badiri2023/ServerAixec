@@ -41,4 +41,5 @@ namespace AixecAPI.Hubs
             }
         }
     }
+}}
 }
