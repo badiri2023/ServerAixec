@@ -26,12 +26,15 @@ public class AuthController : ControllerBase
         return Ok(new { mensaje = "¡La API está viva y conectada!" });
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDto dto)
-    {
-        if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
-            return BadRequest("El email ya está en uso");
+[HttpPost("register")]
+public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+{
+    if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
+        return BadRequest("El email ya está en uso");
 
+    using var tx = await _db.Database.BeginTransactionAsync();
+    try
+    {
         var user = new User
         {
             Username = dto.Username,
@@ -40,29 +43,60 @@ public class AuthController : ControllerBase
         };
 
         _db.Users.Add(user);
-        
         await _db.SaveChangesAsync();
 
-        var nuevoMazo = new Deck {
-            Name = "Mazo Inicial", 
-            UserId = user.Id 
+        var nuevoMazo = new Deck
+        {
+            Name = "Mazo Inicial",
+            UserId = user.Id
         };
         _db.Decks.Add(nuevoMazo);
         await _db.SaveChangesAsync();
 
-        var idsCartasIniciales = new List<int> {1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27};
+        var idsCartasIniciales = new List<int> { 1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27 };
 
-        foreach (var cartaId in idsCartasIniciales){
-            _db.DeckCards.Add(new DeckCard{ 
-                DeckId = nuevoMazo.Id, 
-                CardId = cartaId 
+        // Añadimos las relaciones DeckCard
+        foreach (var cartaId in idsCartasIniciales)
+        {
+            _db.DeckCards.Add(new DeckCard
+            {
+                DeckId = nuevoMazo.Id,
+                CardId = cartaId
             });
         }
 
+        // Añadimos las cartas al inventario del usuario (PlayerCard)
+        foreach (var cartaId in idsCartasIniciales)
+        {
+            var existing = await _db.PlayerCards.FirstOrDefaultAsync(pc => pc.UserId == user.Id && pc.CardId == cartaId);
+            if (existing != null)
+            {
+                existing.Quantity += 1;
+                _db.PlayerCards.Update(existing);
+            }
+            else
+            {
+                _db.PlayerCards.Add(new PlayerCard
+                {
+                    UserId = user.Id,
+                    CardId = cartaId,
+                    Quantity = 1
+                });
+            }
+        }
+
         await _db.SaveChangesAsync();
+        await tx.CommitAsync();
 
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
+    catch (Exception ex)
+    {
+        await tx.RollbackAsync();
+        // Loguea el error según tu sistema de logging
+        return StatusCode(500, "Error al crear usuario: " + ex.Message);
+    }
+}
 
 
 
