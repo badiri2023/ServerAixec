@@ -175,149 +175,85 @@ public async Task<IActionResult> StartGame(string mode)
         });
     }
 
-    [HttpPost("{gameId}/turn")]
-    public async Task<IActionResult> NextTurn(int gameId)
-    {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    public record BotResultDto(bool Win);
 
-        var game = await _db.Games
-            .Include(g => g.Players)
-            .FirstOrDefaultAsync(g => g.Id == gameId);
-
-        if (game == null) return NotFound();
-
-        var currentPlayer = game.Players.FirstOrDefault(p => p.UserId == userId);
-        if (currentPlayer == null || !currentPlayer.IsCurrentTurn)
-            return BadRequest("No es tu turno");
-
-        currentPlayer.IsCurrentTurn = false;
-        var players = game.Players.ToList();
-        var nextIndex = (players.IndexOf(currentPlayer) + 1) % players.Count;
-        players[nextIndex].IsCurrentTurn = true;
-        game.CurrentTurn++;
-
-        await _db.SaveChangesAsync();
-
-        return Ok(new { nextUserId = players[nextIndex].UserId });
-    }
-
-public record BotResultDto(bool Win);
-
-[HttpPost("report-bot-result")]
-public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
-{
-    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-    if (userIdClaim == null) return Unauthorized("Token no válido");
-    
-    int userId = int.Parse(userIdClaim.Value);
-    var user = await _db.Users.FindAsync(userId);
-    
-    if (user == null) return NotFound("Usuario no encontrado");
-
-    user.PlayedMatches++;
-    if (dto.Win) 
-    {
-        user.WonMatches++;
-        user.Money += 25;
-    }
-    else
-    {
-        user.Money += 10;
-    }
-
-    await _db.SaveChangesAsync();
-    
-    // Devolvemos el nuevo saldo para que Godot lo confirme
-    return Ok(new { message = "OK", nuevoSaldo = user.Money });
-}
-
-    // Reportar resultado final (winner y loser)
-[HttpPost("report-result")]
-public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
-{
-    // Validar que la partida existe
-    var game = await _db.Games.FindAsync(dto.GameId);
-    if (game == null) return NotFound("Partida no encontrada");
-
-    //  Buscar usuarios
-    var winner = await _db.Users.FindAsync(dto.WinnerUserId);
-    var loser = await _db.Users.FindAsync(dto.LoserUserId);
-    if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
-
-    // Marcar partida como terminada
-    game.Status = "finished";
-
-    //  Lógica de Recompensas y Estadísticas
-    bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
-
-    if (vsBot)
-    {
-        // Si hay un bot, identificamos quién es el humano 
-        var humano = dto.WinnerUserId == 10 ? loser : winner;
-        bool ganoHumano = (dto.WinnerUserId != 10);
-
-        humano.PlayedMatches++;
-        if (ganoHumano)
+    [HttpPost("report-bot-result")]
+    public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
         {
-            humano.WonMatches++;
-            humano.Money += 25; 
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null) return Unauthorized("Token no válido");
+        
+        int userId = int.Parse(userIdClaim.Value);
+        var user = await _db.Users.FindAsync(userId);
+        
+        if (user == null) return NotFound("Usuario no encontrado");
+
+        user.PlayedMatches++;
+        if (dto.Win) 
+        {
+            user.WonMatches++;
+            user.Money += 25;
         }
         else
         {
-            humano.Money += 10; 
+            user.Money += 10;
         }
-    }
-    else
-    {
-        winner.WonMatches++;
-        winner.PlayedMatches++;
-        winner.Money += 50;
 
-        loser.PlayedMatches++;
-        loser.Money += 25;
+        await _db.SaveChangesAsync();
+        
+        // Devolvemos el nuevo saldo para que Godot lo confirme
+        return Ok(new { message = "OK", nuevoSaldo = user.Money });
     }
 
-    await _db.SaveChangesAsync();
-    return Ok(new { message = "Resultado registrado y recompensas entregadas" });
-}
-
-    // POST api/game/finish 
-    [HttpPost("finish")]
-    public async Task<IActionResult> FinishGame([FromBody] FinishGameDto dto)
+    // Reportar resultado final (winner y loser)
+    [HttpPost("report-result")]
+    public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
     {
+        // Validar que la partida existe
+        var game = await _db.Games.FindAsync(dto.GameId);
+        if (game == null) return NotFound("Partida no encontrada");
+
+        //  Buscar usuarios
         var winner = await _db.Users.FindAsync(dto.WinnerUserId);
         var loser = await _db.Users.FindAsync(dto.LoserUserId);
+        if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
 
-        if (winner == null || loser == null)
-            return NotFound("Uno o ambos usuarios no encontrados");
+        // Marcar partida como terminada
+        game.Status = "finished";
 
+        //  Lógica de Recompensas y Estadísticas
         bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
-
-        winner.WonMatches++;
-        winner.PlayedMatches++;
-        loser.PlayedMatches++;
 
         if (vsBot)
         {
-            var realWinner = dto.WinnerUserId == 10 ? loser : winner;
-            var realLoser = dto.WinnerUserId == 10 ? winner : loser;
+            // Si hay un bot, identificamos quién es el humano 
+            var humano = dto.WinnerUserId == 10 ? loser : winner;
+            bool ganoHumano = (dto.WinnerUserId != 10);
 
-            realWinner.Money += 25;
-            realLoser.Money += 10;
+            humano.PlayedMatches++;
+            if (ganoHumano)
+            {
+                humano.WonMatches++;
+                humano.Money += 25; 
+            }
+            else
+            {
+                humano.Money += 10; 
+            }
         }
         else
         {
+            winner.WonMatches++;
+            winner.PlayedMatches++;
             winner.Money += 50;
+
+            loser.PlayedMatches++;
             loser.Money += 25;
         }
 
         await _db.SaveChangesAsync();
-
-        return Ok(new
-        {
-            winner = new { winner.Id, winner.Username, winner.WonMatches, winner.PlayedMatches, winner.Money },
-            loser = new { loser.Id, loser.Username, loser.PlayedMatches, loser.Money }
-        });
+        return Ok(new { message = "Resultado registrado y recompensas entregadas" });
     }
+
 }
 
