@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
-using AixecAPI.Data;   // Necesario para acceder a AppDbContext
-using AixecAPI.Models; // Necesario para acceder a ChatMessage
+using AixecAPI.Data; 
+using AixecAPI.Models; 
 
 namespace AixecAPI.Hubs
 {
@@ -24,7 +24,6 @@ namespace AixecAPI.Hubs
                 CreatedAt = DateTime.UtcNow 
             };
 
-            //LO GUARDAMOS (Esto es lo que da la PERSISTENCIA)
             _db.ChatMessages.Add(nuevoMensaje);
             await _db.SaveChangesAsync();
 

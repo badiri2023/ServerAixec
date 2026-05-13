@@ -44,7 +44,6 @@ public class GameController : ControllerBase
         return Ok(new { gameId = game.Id });
     }
     
-    // Crear una nueva sala contra el BOT (mantengo por compatibilidad)
     [HttpPost("create-bot")]
     public async Task<IActionResult> CreateBotGame()
     {
@@ -65,7 +64,7 @@ public class GameController : ControllerBase
         var botPlayer = new GamePlayer
         {
             GameId = game.Id,
-            UserId = 10, // ID del bot
+            UserId = 10, 
             IsCurrentTurn = false
         };
         _db.GamePlayers.Add(botPlayer);
@@ -75,26 +74,24 @@ public class GameController : ControllerBase
         return Ok(new { gameId = game.Id });
     }
 
-    // Iniciar partida: crea partida y devuelve decks (player + bot)
-    // mode: "bot_fixed" | "bot_random" (o cualquier otra cadena para random por defecto)
 [HttpPost("start/{mode}")]
 public async Task<IActionResult> StartGame(string mode)
 {
-    // 1. Obtener ID del usuario desde el Token
+    // Obtener ID del usuario desde el Token
     var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
     if (userIdClaim == null) return Unauthorized();
     int userId = int.Parse(userIdClaim.Value);
 
-    // 2. Crear partida en DB
+    // Crear partida en DB
     var game = new Game { Status = "playing", CurrentTurn = 1 };
     _db.Games.Add(game);
     await _db.SaveChangesAsync();
 
-    // 3. Asociar jugador
+    //  Asociar jugador
     _db.GamePlayers.Add(new GamePlayer { GameId = game.Id, UserId = userId, IsCurrentTurn = true });
     await _db.SaveChangesAsync();
 
-    // 4. OBTENER EL DECK (CORREGIDO: Solo el último mazo)
+    //OBTENER EL DECK 
     var lastDeck = await _db.Decks
         .Where(d => d.UserId == userId)
         .OrderByDescending(d => d.Id) 
@@ -110,11 +107,9 @@ public async Task<IActionResult> StartGame(string mode)
     }
     else
     {
-        // Fallback: mazo básico si no tiene nada
         playerDeckIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     }
 
-    // 5. GENERAR MAZO DEL BOT
     List<int> botDeckIds;
     if (mode == "bot_fixed")
     {
@@ -130,7 +125,6 @@ public async Task<IActionResult> StartGame(string mode)
             .ToListAsync();
     }
 
-    // 6. Enviar respuesta
     return Ok(new StartGameResponse(game.Id, playerDeckIds, botDeckIds));
 }
  
@@ -181,7 +175,6 @@ public async Task<IActionResult> StartGame(string mode)
         });
     }
 
-    // Pasar turno (mantengo por compatibilidad, aunque la lógica de juego está en cliente)
     [HttpPost("{gameId}/turn")]
     public async Task<IActionResult> NextTurn(int gameId)
     {
@@ -208,13 +201,11 @@ public async Task<IActionResult> StartGame(string mode)
         return Ok(new { nextUserId = players[nextIndex].UserId });
     }
 
-// Asegúrate de tener este record arriba de la clase o en un archivo de Models
 public record BotResultDto(bool Win);
 
 [HttpPost("report-bot-result")]
 public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
 {
-    // 1. Extraer ID del usuario del Token
     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
     if (userIdClaim == null) return Unauthorized("Token no válido");
     
@@ -223,9 +214,8 @@ public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
     
     if (user == null) return NotFound("Usuario no encontrado");
 
-    // 2. Lógica de recompensas
     user.PlayedMatches++;
-    if (dto.Win) // "Win" con Mayúscula porque C# suele mapear así los JSON
+    if (dto.Win) 
     {
         user.WonMatches++;
         user.Money += 25;
@@ -241,28 +231,28 @@ public async Task<IActionResult> ReportBotResult([FromBody] BotResultDto dto)
     return Ok(new { message = "OK", nuevoSaldo = user.Money });
 }
 
-    // Reportar resultado final (cliente envía gameId, winner y loser)
+    // Reportar resultado final (winner y loser)
 [HttpPost("report-result")]
 public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
 {
-    // 1. Validar que la partida existe (si esto falla, da 404)
+    // Validar que la partida existe
     var game = await _db.Games.FindAsync(dto.GameId);
     if (game == null) return NotFound("Partida no encontrada");
 
-    // 2. Buscar usuarios
+    //  Buscar usuarios
     var winner = await _db.Users.FindAsync(dto.WinnerUserId);
     var loser = await _db.Users.FindAsync(dto.LoserUserId);
     if (winner == null || loser == null) return NotFound("Usuarios no encontrados");
 
-    // 3. Marcar partida como terminada
+    // Marcar partida como terminada
     game.Status = "finished";
 
-    // 4. Lógica de Recompensas y Estadísticas
+    //  Lógica de Recompensas y Estadísticas
     bool vsBot = dto.WinnerUserId == 10 || dto.LoserUserId == 10;
 
     if (vsBot)
     {
-        // Si hay un bot, identificamos quién es el humano (el que no es el 10)
+        // Si hay un bot, identificamos quién es el humano 
         var humano = dto.WinnerUserId == 10 ? loser : winner;
         bool ganoHumano = (dto.WinnerUserId != 10);
 
@@ -270,16 +260,15 @@ public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
         if (ganoHumano)
         {
             humano.WonMatches++;
-            humano.Money += 25; // Oro por ganar al bot
+            humano.Money += 25; 
         }
         else
         {
-            humano.Money += 10; // Oro de consolación por perder con bot
+            humano.Money += 10; 
         }
     }
     else
     {
-        // PvP Real (Entre dos humanos)
         winner.WonMatches++;
         winner.PlayedMatches++;
         winner.Money += 50;
@@ -291,8 +280,6 @@ public async Task<IActionResult> ReportResult([FromBody] ReportResultDto dto)
     await _db.SaveChangesAsync();
     return Ok(new { message = "Resultado registrado y recompensas entregadas" });
 }
-
-
 
     // POST api/game/finish 
     [HttpPost("finish")]

@@ -7,7 +7,6 @@ public class Deck
     public User User { get; set; } = null!;
     public string Name { get; set; }
     
-    // Relación con las cartas que componen el mazo
     public List<DeckCard> DeckCards { get; set; } = new();
 }
 

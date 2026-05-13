@@ -23,23 +23,20 @@ public static class GameEngine
         if (player == null) return "Jugador no encontrado.";
         if (state.CurrentTurnUserId != userId) return "No es tu turno.";
         
-        // 1. Validar Maná
         if (player.Mana < cardData.Mana) return "Maná insuficiente.";
 
-        // 2. Validar que tiene la carta en mano
         if (!player.HandCardIds.Contains(cardData.Id)) return "No tienes esa carta en la mano.";
 
-        // 3. Validar espacio en campo
         if (state.Field.Count(f => f.UserId == userId) >= MAX_MONSTRUOS) 
             return "Campo de monstruos lleno.";
 
         // --- EJECUCIÓN DE LA JUGADA ---
         
-        // A) Restamos el maná y quitamos la carta de la mano
+        // Restamos el maná y quitamos la carta de la mano
         player.Mana -= cardData.Mana;
         player.HandCardIds.Remove(cardData.Id);
 
-        // B) Creamos la carta y la añadimos al campo directamente
+        //Creamos la carta y la añadimos al campo directamente
         state.Field.Add(new FieldCard
         {
             UserId = userId,
@@ -50,17 +47,14 @@ public static class GameEngine
             SlotIndex = slotIndex
         });
 
-        // C) Ejecutamos la habilidad (si la carta tiene una)
+        // Ejecutamos la habilidad (si la carta tiene una)
         if (cardData.Ability != null)
         {
             EjecutarHabilidadAlJugar(state, userId, cardData.Ability);
         }
 
-        // Todo salió bien
         return null; 
     }
-
-
 
     public static string? TryAttack(GameState state, int userId, int attackerId, int? targetId)
     {
@@ -74,7 +68,7 @@ public static class GameEngine
         var oponente = state.Players.FirstOrDefault(p => p.UserId != userId);
         if (oponente == null) return "No se encontró al oponente.";
 
-        // ATAQUE DIRECTO AL JUGADOR (Si no hay objetivo seleccionado)
+        // ATAQUE DIRECTO AL JUGADOR
         if (targetId == null)
         {
             oponente.Health -= attacker.Attack;
@@ -87,7 +81,6 @@ public static class GameEngine
 
             target.Defense -= attacker.Attack;
             
-            // Si la defensa llega a 0, la carta se elimina (muere)
             if (target.Defense <= 0) state.Field.Remove(target);
         }
 
@@ -96,33 +89,26 @@ public static class GameEngine
     }
 
     public static void ProcessEndTurn(GameState state){
-        // 1. Resetear el estado de ataque para todas las cartas en el campo
         foreach (var card in state.Field) card.HasAttacked = false;
 
-        // 2. Calcular quién es el siguiente jugador
         var currentIndex = state.Players.FindIndex(p => p.UserId == state.CurrentTurnUserId);
         var nextIndex = (currentIndex + 1) % state.Players.Count;
         
         var nextPlayer = state.Players[nextIndex];
         state.CurrentTurnUserId = nextPlayer.UserId;
 
-        // 3. Lógica del inicio de turno del nuevo jugador:
-        
-        // a) Robar una carta si le quedan en el mazo
         if (nextPlayer.DeckCardIds.Count > 0)
         {
-            int cardToDraw = nextPlayer.DeckCardIds[0]; // Cogemos la primera
-            nextPlayer.DeckCardIds.RemoveAt(0);         // La quitamos del mazo
-            nextPlayer.HandCardIds.Add(cardToDraw);     // La metemos en la mano
+            int cardToDraw = nextPlayer.DeckCardIds[0]; 
+            nextPlayer.DeckCardIds.RemoveAt(0);        
+            nextPlayer.HandCardIds.Add(cardToDraw);  
         }
 
-        // 4. Si el ciclo vuelve al Jugador 1 (índice 0), es una nueva Ronda
         if (nextIndex == 0)
         {
             state.Round++;
             foreach (var p in state.Players)
             {
-                // Aumentar maná máximo hasta un tope (ej. 8) y rellenarlo
                 if (p.MaxMana < MANA_MAXIMO) p.MaxMana++;
                 p.Mana = p.MaxMana;
             }
@@ -136,26 +122,21 @@ public static async Task PlayBotTurn(GameState state, AppDbContext db)
 
         bool playedSomething = true;
         
-        // El bot intentará jugar cartas mientras le siga sobrando maná y tenga huecos
         while (playedSomething)
         {
             playedSomething = false;
 
-            // 1. Obtenemos las cartas reales que tiene el bot en la mano
             var handCards = await db.Cards
                 .Where(c => botPlayer.HandCardIds.Contains(c.Id))
                 .ToListAsync();
 
-            // 2. Buscamos la primera carta que le alcance con su maná
             var cardToPlay = handCards.FirstOrDefault(c => c.Mana <= botPlayer.Mana);
 
             if (cardToPlay != null)
             {
-                // 3. Buscamos un hueco vacío en el tablero (0, 1 o 2)
                 int emptySlot = -1;
                 for (int i = 0; i < MAX_MONSTRUOS; i++)
                 {
-                    // Si no hay ninguna carta del bot en este slot, está vacío
                     if (!state.Field.Any(f => f.UserId == 10 && f.SlotIndex == i))
                     {
                         emptySlot = i;
@@ -163,11 +144,10 @@ public static async Task PlayBotTurn(GameState state, AppDbContext db)
                     }
                 }
 
-                // 4. Si hay hueco, jugamos la carta
                 if (emptySlot != -1)
                 {
                     TryPlayCard(state, 10, cardToPlay, emptySlot);
-                    playedSomething = true; // Volvemos a intentar por si podemos jugar otra
+                    playedSomething = true; 
                 }
             }
         }
@@ -206,7 +186,6 @@ public static async Task PlayBotTurn(GameState state, AppDbContext db)
                 player.Mana += 1;
                 break;
                 
-            // añadir la logica de las habilidades completa
         }
     }
 }

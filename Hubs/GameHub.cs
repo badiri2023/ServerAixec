@@ -10,7 +10,6 @@ public class GameHub : Hub
 {
     private readonly AppDbContext _db;
     
-    // Diccionarios estáticos para mantener referencias si se necesitan en el futuro
     public static readonly Dictionary<int, GameState> GameStates = new();
     public static readonly Dictionary<string, (int GameId, int UserId)> ConnectionMap = new();
 
@@ -18,23 +17,19 @@ public class GameHub : Hub
 
     private int GetUserId() => int.Parse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
-    // --- CONECTARSE: versión mínima ---
     public async Task JoinGame(int gameId)
     {
         var userId = GetUserId();
         if (userId == 0) return;
 
-        // Guardamos el mapping conexión -> (gameId, userId)
+        // Guardamos el mapping conexión  (gameId, userId)
         ConnectionMap[Context.ConnectionId] = (gameId, userId);
         await Groups.AddToGroupAsync(Context.ConnectionId, $"game-{gameId}");
-
-        // Notificamos al grupo que un jugador se ha unido (opcional)
         await Clients.Group($"game-{gameId}").SendAsync("PlayerJoined", new { UserId = userId });
 
-        // Nota: no se reparte ni se ejecuta lógica de juego en el servidor.
     }
 
-    // --- DESCONEXIÓN: limpiamos mappings ---
+    // --- limpiamos mappings ---
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         if (ConnectionMap.TryGetValue(Context.ConnectionId, out var info))
@@ -55,13 +50,11 @@ public class GameHub : Hub
         await Clients.Caller.SendAsync("Error", "Server-side gameplay disabled. Execute game logic locally and report results at the end.");
     }
 
-    // --- PASAR TURNO: stub seguro ---
     public async Task EndTurn(int gameId)
     {
         await Clients.Caller.SendAsync("Error", "Server-side gameplay disabled. Execute game logic locally and report results at the end.");
     }
 
-    // --- Broadcast auxiliar---
     private async Task BroadcastGameStateIfExists(int gameId)
     {
         if (GameStates.TryGetValue(gameId, out var state))

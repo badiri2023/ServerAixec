@@ -115,7 +115,6 @@ public class AuthController : ControllerBase
 [Authorize]
 public async Task<IActionResult> GetPerfil()
 {
-    // no fa falta que envie jugador, se puede coger con los claims
     var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
     if (userIdString == null) return Unauthorized();
     int userId = int.Parse(userIdString);
