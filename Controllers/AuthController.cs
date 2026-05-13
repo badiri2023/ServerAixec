@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
             };
 
             _db.Users.Add(user);
-            await _db.SaveChangesAsync(); // Guardamos para asegurar que user.Id existe
+            await _db.SaveChangesAsync(); 
 
             var nuevoMazo = new Deck
             {
@@ -51,11 +51,10 @@ public class AuthController : ControllerBase
                 UserId = user.Id
             };
             _db.Decks.Add(nuevoMazo);
-            await _db.SaveChangesAsync(); // Guardamos para asegurar que nuevoMazo.Id existe
+            await _db.SaveChangesAsync(); 
 
             var idsCartasIniciales = new List<int> { 1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27 };
 
-            // 1. SOLUCIÓN AL MAZO: Añadimos las relaciones DeckCard
             foreach (var cartaId in idsCartasIniciales)
             {
                 _db.DeckCards.Add(new DeckCard
@@ -78,8 +77,6 @@ public class AuthController : ControllerBase
             await _db.SaveChangesAsync();
             await tx.CommitAsync();
 
-            // 3. IMPORTANTE: Al devolver el token, el cliente luego pedirá los datos.
-            // Las estadísticas (vida, mana) NO se guardan en DeckCard, se traen de la tabla Cards.
             return Ok(new { token = _jwt.GenerateToken(user), userId = user.Id });
         }
         catch (Exception ex)
@@ -133,8 +130,6 @@ public async Task<IActionResult> GetPerfil()
         level = user.Level
     });
 }
-
-
 
 }
 
