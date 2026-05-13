@@ -119,13 +119,12 @@ public class CardController : ControllerBase
             return BadRequest("No tienes suficiente dinero.");
 
         var cards = await _db.Cards
-        .Include(c => c.Ability)
-        .Where(c =>
-            (c.Expansion == expansion ||
-            c.Expansion == "Equipamiento" ||
-            c.Expansion == "Magias") && 
-            c.Id != 50 && c.Id != 0)   
-        .ToListAsync();
+            .Include(c => c.Ability)
+            .Where(c =>
+                c.Expansion == expansion ||
+                c.Expansion == "Equipamiento" ||
+                c.Expansion == "Magias")
+            .ToListAsync();
 
         if (!cards.Any())
             return NotFound("No hay cartas en esta expansión.");
