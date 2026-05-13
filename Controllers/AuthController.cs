@@ -26,55 +26,46 @@ public class AuthController : ControllerBase
         return Ok(new { mensaje = "¡La API está viva y conectada!" });
     }
 
-[HttpPost("register")]
-public async Task<IActionResult> Register([FromBody] RegisterDto dto)
-{
-    if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
-        return BadRequest("El email ya está en uso");
-
-    using var tx = await _db.Database.BeginTransactionAsync();
-    try
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
-        var user = new User
+        if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
+            return BadRequest("El email ya está en uso");
+
+        using var tx = await _db.Database.BeginTransactionAsync();
+        try
         {
-            Username = dto.Username,
-            Email = dto.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-        };
-
-        _db.Users.Add(user);
-        await _db.SaveChangesAsync();
-
-        var nuevoMazo = new Deck
-        {
-            Name = "Mazo Inicial",
-            UserId = user.Id
-        };
-        _db.Decks.Add(nuevoMazo);
-        await _db.SaveChangesAsync();
-
-        var idsCartasIniciales = new List<int> { 1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27 };
-
-        // Añadimos las relaciones DeckCard
-        foreach (var cartaId in idsCartasIniciales)
-        {
-            _db.DeckCards.Add(new DeckCard
+            var user = new User
             {
-                DeckId = nuevoMazo.Id,
-                CardId = cartaId
-            });
-        }
+                Username = dto.Username,
+                Email = dto.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+            };
 
-        // Añadimos las cartas al inventario del usuario (PlayerCard)
-        foreach (var cartaId in idsCartasIniciales)
-        {
-            var existing = await _db.PlayerCards.FirstOrDefaultAsync(pc => pc.UserId == user.Id && pc.CardId == cartaId);
-            if (existing != null)
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync(); // Guardamos para asegurar que user.Id existe
+
+            var nuevoMazo = new Deck
             {
-                existing.Quantity += 1;
-                _db.PlayerCards.Update(existing);
+                Name = "Mazo Inicial",
+                UserId = user.Id
+            };
+            _db.Decks.Add(nuevoMazo);
+            await _db.SaveChangesAsync(); // Guardamos para asegurar que nuevoMazo.Id existe
+
+            var idsCartasIniciales = new List<int> { 1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27 };
+
+            // 1. SOLUCIÓN AL MAZO: Añadimos las relaciones DeckCard
+            foreach (var cartaId in idsCartasIniciales)
+            {
+                _db.DeckCards.Add(new DeckCard
+                {
+                    DeckId = nuevoMazo.Id,
+                    CardId = cartaId
+                });
             }
-            else
+
+            foreach (var cartaId in idsCartasIniciales)
             {
                 _db.PlayerCards.Add(new PlayerCard
                 {
@@ -83,21 +74,20 @@ public async Task<IActionResult> Register([FromBody] RegisterDto dto)
                     Quantity = 1
                 });
             }
+
+            await _db.SaveChangesAsync();
+            await tx.CommitAsync();
+
+            // 3. IMPORTANTE: Al devolver el token, el cliente luego pedirá los datos.
+            // Las estadísticas (vida, mana) NO se guardan en DeckCard, se traen de la tabla Cards.
+            return Ok(new { token = _jwt.GenerateToken(user), userId = user.Id });
         }
-
-        await _db.SaveChangesAsync();
-        await tx.CommitAsync();
-
-        return Ok(new { token = _jwt.GenerateToken(user) });
+        catch (Exception ex)
+        {
+            await tx.RollbackAsync();
+            return StatusCode(500, "Error crítico: " + ex.Message);
+        }
     }
-    catch (Exception ex)
-    {
-        await tx.RollbackAsync();
-        // Loguea el error según tu sistema de logging
-        return StatusCode(500, "Error al crear usuario: " + ex.Message);
-    }
-}
-
 
 
 
