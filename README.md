@@ -1,5 +1,6 @@
 # Aixec Card Game: Wiki del servidor y la base de datos
 
+![[Pasted image 20260513224245.png]]
 ## Diseño de la base de datos
 
 La base de datos consta de 10 tablas:
