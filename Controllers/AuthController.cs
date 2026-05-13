@@ -109,26 +109,26 @@ public class AuthController : ControllerBase
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
 
-// GET: api/auth/perfil
-[HttpGet("perfil")]
-//El authorize hace que se necesite token para que funcione
-[Authorize]
-public async Task<IActionResult> GetPerfil()
-{
-    var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-    if (userIdString == null) return Unauthorized();
-    int userId = int.Parse(userIdString);
+    // GET: api/auth/perfil
+    [HttpGet("perfil")]
+    //El authorize hace que se necesite token para que funcione
+    [Authorize]
+    public async Task<IActionResult> GetPerfil()
+    {
+        var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userIdString == null) return Unauthorized();
+        int userId = int.Parse(userIdString);
 
-    var user = await _db.Users.FindAsync(userId);
-    if (user == null) return NotFound();
+        var user = await _db.Users.FindAsync(userId);
+        if (user == null) return NotFound();
 
-    return Ok(new {
-        id = user.Id,
-        username = user.Username,
-        money = user.Money,
-        level = user.Level
-    });
-}
+        return Ok(new {
+            id = user.Id,
+            username = user.Username,
+            money = user.Money,
+            level = user.Level
+        });
+    }
 
 }
 
