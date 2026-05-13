@@ -1,6 +1,7 @@
 # Aixec Card Game: Wiki del servidor y la base de datos
 
-![[Pasted image 20260513224245.png]]
+<img width="943" height="655" alt="imagen" src="https://github.com/user-attachments/assets/ad38c2bf-0e59-49c5-b9be-bb554d804f43" />
+
 ## Diseño de la base de datos
 
 La base de datos consta de 10 tablas:
@@ -649,7 +650,7 @@ Finaliza una partida, suma las victorias y las partidas jugadas y reparte las mo
 - `404`: Partida no encontrada
 
 ---
-### POST /start/:mode
+## POST /start/:mode
 
 Crea una nueva partida, obtiene el mazo del jugador y genera el mazo del bot según el modo especificado.
 
@@ -670,13 +671,13 @@ Envía el modo en la URL. Los modos disponibles son:
 }
 ```
 
-#### Errores posibles
+### Errores posibles
 
 - `401`: No hay token o es inválido
 
 ---
 
-### POST /report-bot-result
+## POST /report-bot-result
 
 Registra el resultado de una partida contra el bot y reparte las monedas correspondientes.
 
@@ -692,14 +693,14 @@ Registra el resultado de una partida contra el bot y reparte las monedas corresp
 { "message": "OK", "nuevoSaldo": 525 }
 ```
 
-#### Errores posibles
+### Errores posibles
 
 - `401`: No hay token o es inválido
 - `404`: Usuario no encontrado
 
 ---
 
-### POST /report-result
+## POST /report-result
 
 Registra el resultado de una partida entre dos jugadores o contra el bot y reparte monedas y estadísticas.
 
@@ -719,12 +720,12 @@ Registra el resultado de una partida entre dos jugadores o contra el bot y repar
 { "message": "Resultado registrado y recompensas entregadas" }
 ```
 
-#### Reglas de monedas
+### Reglas de monedas
 
 - PvP — ganador: +50, perdedor: +25
 - Vs Bot — jugador gana: +25, jugador pierde: +10
 
-#### Errores posibles
+### Errores posibles
 
 - `401`: No hay token o es inválido
 - `404`: Partida no encontrada
