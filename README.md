@@ -1,6 +1,6 @@
 # Aixec Card Game: Wiki del servidor y la base de datos
 
-<img width="943" height="655" alt="imagen" src="https://github.com/user-attachments/assets/5e360deb-6bb7-449e-81fc-1b83466079e5" />
+<img width="943" height="655" alt="imagen" src="https://github.com/user-attachments/assets/ad38c2bf-0e59-49c5-b9be-bb554d804f43" />
 
 ## Diseño de la base de datos
 
@@ -68,7 +68,7 @@ No envías nada.
 
 ## POST /register
 
-Registra un nuevo usuario y obtiene un token JWT.
+Registra un nuevo usuario, le genera un mazo y obtiene un token JWT.
 
 ### Request
 
@@ -79,7 +79,7 @@ Registra un nuevo usuario y obtiene un token JWT.
 ### Response
 
 ```
-{ "token": "tokenJWTlargo"}
+{ "token": "tokenJWTlargo", "userId": 1 }
 ```
 
 ### Errores posibles
@@ -90,7 +90,7 @@ Registra un nuevo usuario y obtiene un token JWT.
 
 ## POST /login
 
-Inicia sesión con un usuario existente y obtiene un token JWT.
+Inicia sesión con un usuario existente y obtiene un token JWT más el id del usuario.
 
 ### Request
 
@@ -101,7 +101,7 @@ Inicia sesión con un usuario existente y obtiene un token JWT.
 ### Response
 
 ```
-{ "token": "tokenJWTlargo"}
+{ "token": "tokenJWTlargo", "id": 4}
 ```
 
 ### Errores posibles
@@ -650,5 +650,123 @@ Finaliza una partida, suma las victorias y las partidas jugadas y reparte las mo
 - `404`: Partida no encontrada
 
 ---
+## POST /start/:mode
 
+Crea una nueva partida, obtiene el mazo del jugador y genera el mazo del bot según el modo especificado.
+
+### Request
+
+Envía el modo en la URL. Los modos disponibles son:
+
+- `bot_fixed`: el bot usa siempre las cartas con ids 21-30
+- `bot_random`: el bot usa 20 cartas aleatorias
+
+### Response
+
+```
+{
+    "gameId": 1,
+    "playerDeck": [1, 2, 5, 6, 9, 15, 16, 21, 24, 37, 39, 36, 33, 4, 38, 25, 32, 17, 13, 27],
+    "botDeck": [3, 7, 12, 18, 22, 28, 30, 11, 14, 19, 23, 26, 8, 10, 4, 16, 20, 29, 6, 2]
+}
+```
+
+### Errores posibles
+
+- `401`: No hay token o es inválido
+
+---
+
+## POST /report-bot-result
+
+Registra el resultado de una partida contra el bot y reparte las monedas correspondientes.
+
+### Request
+
+```
+{ "win": true }
+```
+
+### Response
+
+```
+{ "message": "OK", "nuevoSaldo": 525 }
+```
+
+### Errores posibles
+
+- `401`: No hay token o es inválido
+- `404`: Usuario no encontrado
+
+---
+
+## POST /report-result
+
+Registra el resultado de una partida entre dos jugadores o contra el bot y reparte monedas y estadísticas.
+
+### Request
+
+```
+{
+    "gameId": 1,
+    "winnerUserId": 3,
+    "loserUserId": 10
+}
+```
+
+### Response
+
+```
+{ "message": "Resultado registrado y recompensas entregadas" }
+```
+
+### Reglas de monedas
+
+- PvP — ganador: +50, perdedor: +25
+- Vs Bot — jugador gana: +25, jugador pierde: +10
+
+### Errores posibles
+
+- `401`: No hay token o es inválido
+- `404`: Partida no encontrada
+- `404`: Usuarios no encontrados
+
+---
 # RankingController
+
+**Ruta:** `/api/ranking`
+## GET /
+
+Muestra una lista con todos los usuarios, ordenados por victorias en orden descendente
+
+### Request
+
+No envía nada.
+
+### Response
+
+```
+[
+    {
+        "id": 9,
+        "username": "mamadu",
+        "wonMatches": 4,
+        "playedMatches": 7,
+        "level": 1
+    },
+    {
+        "id": 18,
+        "username": "xavier",
+        "wonMatches": 2,
+        "playedMatches": 2,
+        "level": 1
+    },
+    {...}
+]
+```
+
+### Errores posibles
+
+- `400`: No es tu turno
+- `401`: No hay token o es inválido
+- `404`: Partida no encontrada
