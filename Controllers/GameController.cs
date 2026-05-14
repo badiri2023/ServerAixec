@@ -107,13 +107,13 @@ public async Task<IActionResult> StartGame(string mode)
     }
     else
     {
-        playerDeckIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        playerDeckIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
     }
 
     List<int> botDeckIds;
     if (mode == "bot_fixed")
     {
-        botDeckIds = new List<int> { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
+        botDeckIds = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
     }
     else
     {
